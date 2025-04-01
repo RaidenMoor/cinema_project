@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ru"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Главная</title>
+</head>
+
+<body>
+<div layout:fragment="content">
+    <div class="container">
+        <div class="d-flex flex-row mt-4 mb-5">
+            <div class="d-flex me-auto">
+                <h3 class="ms-2 mb-0" th:if="${startDate} == null">Афиша</h3>
+                <h3 class="ms-2 mb-0" th:if="${startDate} != null"
+                    th:text="'Афиша на ' + ${#temporals.format(startDate, 'dd.MM.yyyy')}"></h3>
+            </div>
+           <!-- <div class="d-flex me-5">
+                <form method="POST" th:action="@{/}" th:object="${startDate}">
+                    <input name="startDate" type="hidden" th:value="${today}">
+                    <button type="submit" class="btn btn-secondary">Сегодня</button>
+                </form>
+                <form method="POST" th:action="@{/}" th:object="${startDate}">
+                    <input name="startDate" type="hidden" th:value="${tomorrow}">
+                    <button type="submit" class="btn btn-secondary ms-2">Завтра</button>
+                </form>
+            </div>
+            <form class="d-flex needs-validation" method="POST" th:action="@{/}" th:object="${startDate}">
+                <input name="startDate" type="date" th:min="${minDate}" class="form-control" style="background-color: azure" id="selectedDate" required>
+                <label for="selectedDate"></label>
+                <button type="submit" class="btn btn-secondary ms-2">Выбрать</button>
+            </form>
+        </div>-->
+
+        <div class="row justify-content-evenly">
+            <div class="card mb-3 me-3" style="max-width: 540px; border-radius: 15px; background-color: #F6F9F9" th:each="film : ${films}">
+                <div class="row g-0">
+                    <div class="col-md-4 my-2">
+                        <img th:if="${film.posterFileName != null}" style= "border-radius: 15px" th:src="'/posters/' + ${film.posterFileName}" class="img-fluid rounded-start" alt="">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body h-75">
+                            <h4 class="card-title mt-2 mb-4" th:text="${film.title}"></h4>
+                            <p class="card-text"><span class="text-muted">Жанр: </span><span th:text="${film.genre.text}"></span>
+                               <!-- <span  th:if="${film.ratingKp != null}" style="float: right" th:text="'КП: ' + ${film.ratingKp}"></span> -->
+                            </p>
+                            <p class="card-text"><span class="text-muted">Год выхода: </span><span th:text="${film.releaseYear}"></span></p>
+                            <p class="card-text"><span class="text-muted">Страна производства: </span><span th:text="${film.country}"></span></p>
+                        </div>
+                        <div class="row my-3 mx-4">
+                            <a class="btn btn-outline-dark" href="/films/get/9" role="button" style="background-color: #323844; border-radius: 10px; color: white; font-weight: bold">
+                                Подробнее
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>

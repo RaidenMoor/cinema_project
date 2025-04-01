@@ -1,0 +1,73 @@
+<header xmlns:th="http://www.thymeleaf.org"
+        xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+        th:fragment="header">
+  <nav class="navbar navbar-expand-md fixed-top" style="background-color: lightslategrey">
+    <div class="container-fluid">
+      <img src="/img/logo.png" style="max-height: 40px" alt="">
+      <a class="header_logo" href="/" style="color: whitesmoke">Кинотеатр</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+              data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+              aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ms-auto mb-2 mb-md-0">
+          <li class="nav-item" sec:authorize="isAuthenticated() && (hasRole('ADMIN') || hasRole('MANAGER'))">
+            <a class="navigation-link" aria-current="page" href="/films">Фильмы</a>
+          <li class="nav-item" sec:authorize="isAuthenticated() && (hasRole('ADMIN') || hasRole('MANAGER'))">
+            <a class="navigation-link" aria-current="page" href="">Справочники</a>
+          </li>
+          <!--
+          </li>
+          <li class="nav-item" sec:authorize="isAuthenticated() && (hasRole('ADMIN') || hasRole('MANAGER'))">
+            <a class="navigation-link" aria-current="page" href="/filmCreators">Создатели</a>
+          </li>
+          <li class="nav-item" sec:authorize="isAuthenticated() && (hasRole('ADMIN') || hasRole('MANAGER'))">
+            <a class="navigation-link" aria-current="page" href="/seats">Зал</a>
+          </li>
+          -->
+          <li class="nav-item" sec:authorize="isAuthenticated() && (hasRole('ADMIN') || hasRole('MANAGER'))">
+            <a class="navigation-link" aria-current="page" href="">Зал</a>
+          </li>
+        </ul>
+        <!--<div sec:authorize="isAuthenticated() && hasRole(T(com.example.cinema.constants.UserRolesConstants).USER)">
+          <a class="navigation-link"  th:href="'/orders/user/' + ${#authentication.getPrincipal().getUserId()}">Мои заказы</a>
+        </div>-->
+        <div sec:authorize="(isAuthenticated() && hasRole(T(com.example.cinema.constants.UserRolesConstants).USER))||!isAuthenticated()">
+          <form method="POST" th:action="@{/}" th:object="${startDate}">
+            <input name="startDate" type="hidden" th:value="${today}">
+            <button type="submit" class="nav-btn">Сегодня</button>
+          </form>
+        </div>
+        <div sec:authorize="(isAuthenticated() && hasRole(T(com.example.cinema.constants.UserRolesConstants).USER))||!isAuthenticated()">
+          <form method="POST" th:action="@{/}" th:object="${startDate}">
+            <input name="startDate" type="hidden" th:value="${tomorrow}">
+            <button type="submit" class="nav-btn">Завтра</button>
+          </form>
+        </div>
+        <div sec:authorize="(isAuthenticated() && hasRole(T(com.example.cinema.constants.UserRolesConstants).USER))||!isAuthenticated()">
+          <form class="d-flex needs-validation" method="POST" th:action="@{/}" th:object="${startDate}">
+            <input name="startDate" type="date" th:min="${minDate}" class="form-control" style="background-color: white; margin-left: 15px" id="selectedDate" required>
+            <label for="selectedDate"></label>
+          </form>
+        </div>
+        <div sec:authorize="isAuthenticated() && !hasRole('ADMIN')">
+          <a class="navigation-link" th:href="'/users/profile/' + ${#authentication.getPrincipal().getUserId()}">Личный кабинет</a>
+        </div>
+      <!--<div sec:authorize="isAuthenticated() && !hasRole('ADMIN')">
+        <a class="navigation-link" th:href="'/users/profile/' + ${#authentication.getPrincipal().getUserId()}">Личный кабинет</a>
+      </div> -->
+      <div sec:authorize="isAuthenticated() && !hasRole('ADMIN')">
+        <a class="navigation-link" th:href="'/users/about' + ${#authentication.getPrincipal().getUserId()}">Справка</a>
+      </div>
+        <form class="d-flex" sec:authorize="!isAuthenticated()">
+          <a href="/login" class="nav-btn" role="button" aria-disabled="true" style="text-decoration: none">Личный кабинет</a>
+        </form>
+        <form class="d-flex" sec:authorize="isAuthenticated() && hasRole('ADMIN')">
+          <a href="/logout" class="exit_button" role="button" aria-disabled="true" style="color: whitesmoke; background-color: transperent;">Выйти</a>
+        </form>
+      </div>
+    </div>
+  </nav>
+</header>

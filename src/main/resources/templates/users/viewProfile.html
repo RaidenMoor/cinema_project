@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ru"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layout}">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Просмотр профиля</title>
+</head>
+
+<body>
+<div layout:fragment="content">
+  <div class = "container_grey">
+  <h1 style="margin-top: 50px">Профиль</h1>
+  <div sec:authorize="isAuthenticated() && !(hasRole('ADMIN') || hasRole('MANAGER'))" th:if="${#authentication.getPrincipal().getUserId()} == ${user.id}">
+    <p style="font-weight: bold; color: #747474">Логин: <span style="color:black" th:text="${user.login}"></span></p>
+    <p style="font-weight: bold; color: #747474">Почта: <span style="color:black" th:text="${user.email}"></span></p>
+    <p style="font-weight: bold;color: #747474">Дата рождения: <span style="color:black" th:text="${user.birthDate}"></span></p>
+    <p style="font-weight: bold;color: #747474">Имя: <span style="color:black" th:text="${user.firstName}"></span></p>
+    <p style="font-weight: bold;color: #747474">Фамилия: <span style="color:black" th:text="${user.lastName}"></span></p>
+  </div>
+  <div sec:authorize="isAuthenticated() && (hasRole('ADMIN') || hasRole('MANAGER'))">
+    <p >Логин: <span th:text="${user.login}"></span></p>
+    <p>Почта: <span th:text="${user.email}"></span></p>
+    <p>Дата рождения: <span th:text="${user.birthDate}"></span></p>
+    <p>Имя: <span th:text="${user.firstName}"></span></p>
+    <p>Фамилия: <span th:text="${user.lastName}"></span></p>
+  </div>
+  <a sec:authorize="isAuthenticated() && !(hasRole('ADMIN'))"
+      class="btn btn-primary" role="button"
+     th:if="${#authentication.getPrincipal().getUserId()} == ${user.id}" aria-disabled="true" style="background-color: #323844; border-radius: 10px; color: white; font-weight: bold; margin-top: 20px;">Редактировать</a>
+  <div sec:authorize="isAuthenticated() && hasRole(T(com.example.cinema.constants.UserRolesConstants).USER)">
+    <a class="btn btn-primary" role="button" aria-disabled="true"  style="background-color: #C78EFF; border-radius: 10px; color: white; font-weight: bold; margin-top: 20px;">История бронирования</a>
+  </div>
+  <form class="d-flex" sec:authorize="isAuthenticated() && !hasRole('ADMIN')">
+    <button href="/logout" class="btn btn-primary" role="button" aria-disabled="true" style="background-color:white; border-radius:10px; border:2px solid #ff0000; color:#ff0000; text-alight:center;margin-top: 20px;">Выйти из аккаунта</button>
+  </form>
+
+    <!-- <a sec:authorize="isAuthenticated() && !(hasRole('ADMIN'))"
+     th:href="'/users/profile/update/' + ${user.id}" class="btn btn-primary" role="button"
+     th:if="${#authentication.getPrincipal().getUserId()} == ${user.id}" aria-disabled="true" style="background-color: #323844; border-radius: 10px; color: white; font-weight: bold; margin-top: 20px;">Редактировать</a>
+  <div sec:authorize="isAuthenticated() && hasRole(T(com.example.cinema.constants.UserRolesConstants).USER)">
+    <a class="btn btn-primary" role="button" aria-disabled="true" th:href="'/orders/user/' + ${#authentication.getPrincipal().getUserId()}" style="background-color: #C78EFF; border-radius: 10px; color: white; font-weight: bold; margin-top: 20px;">История бронирования</a>
+  </div>
+  <form class="d-flex" sec:authorize="isAuthenticated() && !hasRole('ADMIN')">
+    <button href="/logout" class="btn btn-primary" role="button" aria-disabled="true" style="background-color:white; border-radius:10px; border:2px solid #ff0000; color:#ff0000; text-alight:center;margin-top: 20px;">Выйти из аккаунта</button>
+  </form>-->
+  </div>
+</div>
+</body>
+
+</html>
