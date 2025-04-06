@@ -14,9 +14,9 @@ import java.util.List;
 
 @Service
 public class CountryService extends GenericService<Country, CountryDTO>{
-    public CountryService(CountryRepository countryRepository, CountryMapper countreMapper) {
+    public CountryService(CountryRepository countryRepository, CountryMapper countryMapper) {
         repository = countryRepository;
-        mapper = countreMapper;
+        mapper = countryMapper;
     }
 
 

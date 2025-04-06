@@ -25,9 +25,7 @@
   </div>
 
     <a sec:authorize="isAuthenticated() && !(hasRole('ADMIN'))"
-
-       data-bs-toggle="modal"
-       data-bs-target="#editProfileModal"
+       
        class="btn btn-primary" role="button"
        th:if="${#authentication.getPrincipal().getUserId()} == ${user.id}" aria-disabled="true"
        style="background-color: #323844; border-radius: 10px; color: white;
@@ -49,39 +47,7 @@
   </div>
 
 </div>
-<div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content" style="background-color: #323844; color: white;">
-      <div class="modal-header">
-        <h5 class="modal-title" id="editProfileModalLabel">Редактировать профиль</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-       <form id="editProfileForm" method="POST" th:action="@{/users/profile/update}" th:object="${userForm}" style="margin: 0;">
-          <input type="hidden" name="id" id="modalUserId" th:value="${user.id}">
-          <div class="mb-3">
-            <label for="modalLogin" class="form-label">Логин</label>
-            <input name="login" type="text" class="form-control" id="modalLogin" required>
-          </div>
-          <div class="mb-3">
-            <label for="modalEmail" class="form-label">Почта</label>
-            <input th:value="${user.email}" name="email" type="email" class="form-control" id="modalEmail" required>
-          </div>
-          <div class="mb-3">
-            <label for="modalFirstName" class="form-label">Имя</label>
-            <input th:value="${user.firstName}" name="firstName" type="text" class="form-control" id="modalFirstName" required>
-          </div>
-          <div class="mb-3">
-            <label for="modalLastName" class="form-label">Фамилия</label>
-            <input th:value="${user.lastName}" name="lastName" type="text" class="form-control" id="modalLastName" required>
-          </div>
-          <button type="submit" class="btn btn-primary" style ="background-color: #E2E5FF; color: #323844; border:none;border-radius:10px">Сохранить</button>
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style ="background-color: transparent; color: #ffff;  outline: 3px solid #ffffff; border-radius:10px">Закрыть</button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
+
 </body>
 
 </html>

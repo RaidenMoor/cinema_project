@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*; // Используйте jakarta.persistence.*
 import lombok.*;
+import org.hibernate.annotations.Where;
 
 import java.time.LocalDateTime;
 
@@ -12,6 +13,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@Where(clause = "is_deleted = false")
 @Setter
 @ToString(callSuper = true)
 @SequenceGenerator(name = "default_gen", sequenceName = "genres_seq", allocationSize = 1, initialValue = 14)

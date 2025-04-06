@@ -43,14 +43,13 @@ create table films
     updated_when     timestamp(6),
     country_id     bigint not null,  -- Foreign Key for Country
     description      varchar(255) not null,
-    genre_id       bigint     not null,  -- Foreign Key for Genre
+    genre       bigint     not null,  -- Foreign Key for Genre
     poster_file_name varchar(255),
     release_year     smallint     not null,
     title            varchar(255) not null,
     constraint fk_films_country
         foreign key (country_id) references countries (id),
-    constraint fk_films_genre
-        foreign key (genre_id) references genres (id)
+
 );
 
 create table film_creators

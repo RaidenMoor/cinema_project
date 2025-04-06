@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.Where;
 
 import java.util.Set;
 
@@ -16,6 +17,7 @@ import java.util.Set;
 @Getter
 @Setter
 @ToString(callSuper = true)
+@Where(clause = "is_deleted = false")
 @SequenceGenerator(name = "default_gen", sequenceName = "films_seq", allocationSize = 1, initialValue = 12)
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "jsonId")
 public class Film extends GenericModel{

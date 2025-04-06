@@ -144,11 +144,11 @@ public class FilmCreatorController {
         }
         else if ("countries".equals(section)) {
             model.addAttribute("country", countryService.getById(id));
-            return "countries/updateCountry"; // Создайте страницу для редактирования стран
+            return "filmCreators/updateCountry"; // Создайте страницу для редактирования стран
         }
         else if ("genres".equals(section)) {
             model.addAttribute("genre", genreService.getById(id));
-            return "genres/updateGenre"; // Создайте страницу для редактирования жанров
+            return "filmCreators/updateGenre"; // Создайте страницу для редактирования жанров
         }
         return "redirect:/filmCreators?section=" + section;
     }

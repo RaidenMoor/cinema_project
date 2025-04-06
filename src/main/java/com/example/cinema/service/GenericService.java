@@ -72,6 +72,7 @@ public abstract class GenericService<E extends GenericModel, D extends GenericDT
         return false;
     }
 
+
     public void softDelete(Long id) {
         D DTO = getById(id);
         DTO.setDeleted(true);
