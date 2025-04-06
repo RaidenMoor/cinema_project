@@ -18,7 +18,7 @@ create table users
     is_deleted            boolean,
     updated_by            varchar(255),
     updated_when          timestamp(6),
-    birth_date            date         not null,
+
     change_password_token varchar(255),
     email                 varchar(255) not null,
     first_name            varchar(255) not null,
@@ -41,12 +41,16 @@ create table films
     is_deleted       boolean,
     updated_by       varchar(255),
     updated_when     timestamp(6),
-    country          varchar(255) not null,
+    country_id     bigint not null,  -- Foreign Key for Country
     description      varchar(255) not null,
-    genre            smallint     not null,
+    genre_id       bigint     not null,  -- Foreign Key for Genre
     poster_file_name varchar(255),
     release_year     smallint     not null,
-    title            varchar(255) not null
+    title            varchar(255) not null,
+    constraint fk_films_country
+        foreign key (country_id) references countries (id),
+    constraint fk_films_genre
+        foreign key (genre_id) references genres (id)
 );
 
 create table film_creators
@@ -60,8 +64,7 @@ create table film_creators
     is_deleted   boolean,
     updated_by   varchar(255),
     updated_when timestamp(6),
-    full_name    varchar(255) not null,
-    position     varchar(255) not null
+    full_name    varchar(255) not null
 );
 
 create table films_film_creators
@@ -106,7 +109,10 @@ create table seats
     updated_by   varchar(255),
     updated_when timestamp(6),
     place        smallint     not null,
-    row          smallint     not null
+    row          smallint     not null,
+    hall_id      bigint       not null,  -- Foreign Key for Hall
+    constraint fk_seats_hall
+        foreign key (hall_id) references halls (id)
 );
 
 create table orders
@@ -161,4 +167,43 @@ create table reviews
             references users
 );
 
+create table countries (
+    id           bigint       not null
+        primary key,
+    created_by   varchar(255) not null,
+    created_when timestamp(6) not null,
+    deleted_by   varchar(255),
+    deleted_when timestamp(6),
+    is_deleted   boolean,
+    updated_by   varchar(255),
+    updated_when timestamp(6),
+   country_name    varchar(255) not null
+);
 
+create table genres (
+    id           bigint       not null
+            primary key,
+        created_by   varchar(255) not null,
+        created_when timestamp(6) not null,
+        deleted_by   varchar(255),
+        deleted_when timestamp(6),
+        is_deleted   boolean,
+        updated_by   varchar(255),
+        updated_when timestamp(6),
+        genre_name    varchar(255) not null
+);
+
+create table halls (
+ id           bigint       not null
+            primary key,
+        created_by   varchar(255) not null,
+        created_when timestamp(6) not null,
+        deleted_by   varchar(255),
+        deleted_when timestamp(6),
+        is_deleted   boolean,
+        updated_by   varchar(255),
+        updated_when timestamp(6),
+        count_row smallint not null,
+        count_place smallint not null,
+        hall_type varchar(10) not null
+);

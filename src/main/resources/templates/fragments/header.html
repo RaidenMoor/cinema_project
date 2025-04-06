@@ -16,7 +16,7 @@
           <li class="nav-item" sec:authorize="isAuthenticated() && (hasRole('ADMIN') || hasRole('MANAGER'))">
             <a class="navigation-link" aria-current="page" href="/films">Фильмы</a>
           <li class="nav-item" sec:authorize="isAuthenticated() && (hasRole('ADMIN') || hasRole('MANAGER'))">
-            <a class="navigation-link" aria-current="page" href="">Справочники</a>
+            <a class="navigation-link" aria-current="page" href="@{/filmCreators?section=directors}">Справочники</a>
           </li>
           <!--
           </li>
@@ -47,11 +47,15 @@
           </form>
         </div>
         <div sec:authorize="(isAuthenticated() && hasRole(T(com.example.cinema.constants.UserRolesConstants).USER))||!isAuthenticated()">
-          <form class="d-flex needs-validation" method="POST" th:action="@{/}" th:object="${startDate}">
-            <input name="startDate" type="date" th:min="${minDate}" class="form-control" style="background-color: white; margin-left: 15px" id="selectedDate" required>
-            <label for="selectedDate"></label>
-          </form>
+          <!-- Кнопка для открытия календаря -->
+          <button class="nav-btn" data-bs-toggle="modal" data-bs-target="#calendarModal">
+            <i class="bi bi-calendar3"></i> Календарь
+          </button>
+
         </div>
+
+
+
         <div sec:authorize="isAuthenticated() && !hasRole('ADMIN')">
           <a class="navigation-link" th:href="'/users/profile/' + ${#authentication.getPrincipal().getUserId()}">Личный кабинет</a>
         </div>
@@ -70,4 +74,29 @@
       </div>
     </div>
   </nav>
+
+  <!-- Модальное окно с календарем -->
+  <div class="modal fade" id="calendarModal" tabindex="0" aria-labelledby="calendarModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="calendarModalLabel">Выберите дату</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="dateForm" method="POST" th:action="@{/}" th:object="${startDate}">
+            <input name="startDate" type="date"
+                   th:min="${minDate}"
+                   class="form-control mb-3"
+                   id="modalDateInput"
+                   required>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style = "background-color: #ffff; border:none; color: #323844; border-radius: 10px">Отмена</button>
+          <button type="submit" form="dateForm" class="btn btn-primary" style = "background-color: #323844; border-radius: 10px; border: none">Выбрать</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </header>

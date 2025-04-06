@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ru"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Справочник</title>
+  <style>
+    .active-button {
+      background-color: #007bff !important;
+      color: white !important;
+    }
+  </style>
+</head>
+
+<body>
+<div layout:fragment="content">
+
+  <div>
+    <hr class="hr"/>
+    <h3>Справочник</h3>
+
+    <div class="btn-group" role="group" aria-label="Справочники">
+      <a th:href="@{/filmCreators?section=directors}"
+         th:class="${activeSection == 'directors' ? 'btn btn-primary active-button' : 'btn btn-light inactive-button'}">Режиссеры</a>
+      <a th:href="@{/filmCreators?section=countries}"
+         th:class="${activeSection == 'countries' ? 'btn btn-primary active-button' : 'btn btn-light inactive-button'}">Страны</a>
+      <a th:href="@{/filmCreators?section=genres}"
+         th:class="${activeSection == 'genres' ? 'btn_blue active-button' : 'btn btn-light inactive-button'}">Жанры</a>
+    </div>
+  </div>
+
+  <hr class="mt-3 hr"/>
+
+  <!-- Форма добавления записи (теперь всегда отображается) -->
+  <div class="mt-3">
+    <h3>Добавить запись</h3>
+    <form method="POST" th:action="@{/filmCreators/add(section=${activeSection})}" th:object="${newEntry}">
+      <div class="mb-3" th:if="${activeSection == 'directors'}">
+        <label for="fullName" class="form-label">ФИО Режиссера:</label>
+        <input type="text" class="form-control" id="fullName" name="fullName" required>
+      </div>
+      <div class="mb-3" th:if="${activeSection == 'countries'}">
+        <label for="countryName" class="form-label">Название страны:</label>
+        <input type="text" class="form-control" id="countryName" name="countryName" required>
+      </div>
+      <div class="mb-3" th:if="${activeSection == 'genres'}">
+        <label for="genreName" class="form-label">Название жанра:</label>
+        <input type="text" class="form-control" id="genreName" name="genreName" required>
+      </div>
+      <button type="submit" class="btn btn-success" style="background-color: #323844; border-radius: 10px; color: white; font-weight: bold">Добавить</button>
+    </form>
+  </div>
+
+  <hr class="mt-3 hr"/>
+
+  <!-- Отображение данных (зависит от выбранного справочника) -->
+  <div class="mt-5" th:if="${activeSection == 'directors'}">
+    <h2>Режиссеры</h2>
+    <table class="table table-hover mt-3">
+      <thead>
+      <tr>
+        <th scope="col">ФИО</th>
+        <th scope="col"></th> <!-- Для кнопок -->
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="filmCreator : ${data}">
+        <td th:text="${filmCreator.fullName}"></td>
+        <td>
+          <div>
+            <a class="btn btn-sm btn-outline-success"
+               th:href="@{/filmCreators/update/{id}(id=${filmCreator.getId()}, section=${activeSection})}">Редактировать</a>
+            <a class="btn btn-sm btn-outline-danger"
+               th:href="@{/filmCreators/delete/{id}(id=${filmCreator.getId()}, section=${activeSection})}"
+               onclick="return confirm('Вы действительно хотите удалить режиссера?');">Удалить</a>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="mt-5" th:if="${activeSection == 'countries'}">
+    <h2>Страны</h2>
+    <table class="table table-hover mt-3">
+      <thead>
+      <tr>
+        <th scope="col">Название</th>
+        <th scope="col"></th> <!-- Для кнопок -->
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="country : ${data}">
+        <td th:text="${country.countryName}"></td>
+        <td>
+          <div>
+            <a class="btn btn-sm btn-outline-success"
+               th:href="@{/filmCreators/update/{id}(id=${country.getId()}, section=${activeSection})}">Редактировать</a>
+            <a class="btn btn-sm btn-outline-danger"
+               th:href="@{/filmCreators/delete/{id}(id=${country.getId()}, section=${activeSection})}"
+               onclick="return confirm('Вы действительно хотите удалить страну?');">Удалить</a>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="mt-5" th:if="${activeSection == 'genres'}">
+    <h2>Жанры</h2>
+    <table class="table table-hover mt-3">
+      <thead>
+      <tr>
+        <th scope="col">Название</th>
+        <th scope="col"></th> <!-- Для кнопок -->
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="genres : ${data}">
+        <td th:text="${genres.genreName}"></td>
+        <td>
+          <div>
+            <a class="btn btn-sm btn-outline-success"
+               th:href="@{/filmCreators/update/{id}(id=${genres.getId()}, section=${activeSection})}">Редактировать</a>
+            <a class="btn btn-sm btn-outline-danger"
+               th:href="@{/filmCreators/delete/{id}(id=${genres.getId()}, section=${activeSection})}"
+               onclick="return confirm('Вы действительно хотите удалить жанр?');">Удалить</a>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+</body>
+</html>

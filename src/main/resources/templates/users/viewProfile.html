@@ -4,6 +4,7 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{layout}">
 
+
 <head>
   <meta charset="UTF-8">
   <title>Просмотр профиля</title>
@@ -11,41 +12,74 @@
 
 <body>
 <div layout:fragment="content">
+  <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+  <!-- Подключение Bootstrap JavaScript -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <div class = "container_grey">
   <h1 style="margin-top: 50px">Профиль</h1>
   <div sec:authorize="isAuthenticated() && !(hasRole('ADMIN') || hasRole('MANAGER'))" th:if="${#authentication.getPrincipal().getUserId()} == ${user.id}">
     <p style="font-weight: bold; color: #747474">Логин: <span style="color:black" th:text="${user.login}"></span></p>
     <p style="font-weight: bold; color: #747474">Почта: <span style="color:black" th:text="${user.email}"></span></p>
-    <p style="font-weight: bold;color: #747474">Дата рождения: <span style="color:black" th:text="${user.birthDate}"></span></p>
     <p style="font-weight: bold;color: #747474">Имя: <span style="color:black" th:text="${user.firstName}"></span></p>
     <p style="font-weight: bold;color: #747474">Фамилия: <span style="color:black" th:text="${user.lastName}"></span></p>
   </div>
-  <div sec:authorize="isAuthenticated() && (hasRole('ADMIN') || hasRole('MANAGER'))">
-    <p >Логин: <span th:text="${user.login}"></span></p>
-    <p>Почта: <span th:text="${user.email}"></span></p>
-    <p>Дата рождения: <span th:text="${user.birthDate}"></span></p>
-    <p>Имя: <span th:text="${user.firstName}"></span></p>
-    <p>Фамилия: <span th:text="${user.lastName}"></span></p>
-  </div>
-  <a sec:authorize="isAuthenticated() && !(hasRole('ADMIN'))"
-      class="btn btn-primary" role="button"
-     th:if="${#authentication.getPrincipal().getUserId()} == ${user.id}" aria-disabled="true" style="background-color: #323844; border-radius: 10px; color: white; font-weight: bold; margin-top: 20px;">Редактировать</a>
-  <div sec:authorize="isAuthenticated() && hasRole(T(com.example.cinema.constants.UserRolesConstants).USER)">
-    <a class="btn btn-primary" role="button" aria-disabled="true"  style="background-color: #C78EFF; border-radius: 10px; color: white; font-weight: bold; margin-top: 20px;">История бронирования</a>
-  </div>
-  <form class="d-flex" sec:authorize="isAuthenticated() && !hasRole('ADMIN')">
-    <button href="/logout" class="btn btn-primary" role="button" aria-disabled="true" style="background-color:white; border-radius:10px; border:2px solid #ff0000; color:#ff0000; text-alight:center;margin-top: 20px;">Выйти из аккаунта</button>
-  </form>
 
+    <a sec:authorize="isAuthenticated() && !(hasRole('ADMIN'))"
+
+       data-bs-toggle="modal"
+       data-bs-target="#editProfileModal"
+       class="btn btn-primary" role="button"
+       th:if="${#authentication.getPrincipal().getUserId()} == ${user.id}" aria-disabled="true"
+       style="background-color: #323844; border-radius: 10px; color: white;
+        font-weight: bold; margin-top: 20px;">Редактировать</a>
+  <div sec:authorize="isAuthenticated() && hasRole(T(com.example.cinema.constants.UserRolesConstants).USER)">
+    <a class="btn btn-primary" role="button" aria-disabled="true" th:href="'/orders/user/' + ${#authentication.getPrincipal().getUserId()}"  style="border:none;background-color: #C78EFF; border-radius: 10px; color: white; font-weight: bold; margin-top: 20px;">История бронирования</a>
+  </div>
+    <form class="d-flex" th:action="@{/logout}" method="post" sec:authorize="isAuthenticated() && !hasRole('ADMIN')">
+      <button type="submit" class="btn btn-primary" style="border:none;background-color:white; border-radius:10px; border:2px solid #ff0000; color:#ff0000; text-align:center;margin-top: 20px;">Выйти из аккаунта</button>
+      <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+    </form>
     <!-- <a sec:authorize="isAuthenticated() && !(hasRole('ADMIN'))"
      th:href="'/users/profile/update/' + ${user.id}" class="btn btn-primary" role="button"
      th:if="${#authentication.getPrincipal().getUserId()} == ${user.id}" aria-disabled="true" style="background-color: #323844; border-radius: 10px; color: white; font-weight: bold; margin-top: 20px;">Редактировать</a>
   <div sec:authorize="isAuthenticated() && hasRole(T(com.example.cinema.constants.UserRolesConstants).USER)">
     <a class="btn btn-primary" role="button" aria-disabled="true" th:href="'/orders/user/' + ${#authentication.getPrincipal().getUserId()}" style="background-color: #C78EFF; border-radius: 10px; color: white; font-weight: bold; margin-top: 20px;">История бронирования</a>
   </div>
-  <form class="d-flex" sec:authorize="isAuthenticated() && !hasRole('ADMIN')">
-    <button href="/logout" class="btn btn-primary" role="button" aria-disabled="true" style="background-color:white; border-radius:10px; border:2px solid #ff0000; color:#ff0000; text-alight:center;margin-top: 20px;">Выйти из аккаунта</button>
-  </form>-->
+  -->
+  </div>
+
+</div>
+<div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content" style="background-color: #323844; color: white;">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editProfileModalLabel">Редактировать профиль</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+       <form id="editProfileForm" method="POST" th:action="@{/users/profile/update}" th:object="${userForm}" style="margin: 0;">
+          <input type="hidden" name="id" id="modalUserId" th:value="${user.id}">
+          <div class="mb-3">
+            <label for="modalLogin" class="form-label">Логин</label>
+            <input name="login" type="text" class="form-control" id="modalLogin" required>
+          </div>
+          <div class="mb-3">
+            <label for="modalEmail" class="form-label">Почта</label>
+            <input th:value="${user.email}" name="email" type="email" class="form-control" id="modalEmail" required>
+          </div>
+          <div class="mb-3">
+            <label for="modalFirstName" class="form-label">Имя</label>
+            <input th:value="${user.firstName}" name="firstName" type="text" class="form-control" id="modalFirstName" required>
+          </div>
+          <div class="mb-3">
+            <label for="modalLastName" class="form-label">Фамилия</label>
+            <input th:value="${user.lastName}" name="lastName" type="text" class="form-control" id="modalLastName" required>
+          </div>
+          <button type="submit" class="btn btn-primary" style ="background-color: #E2E5FF; color: #323844; border:none;border-radius:10px">Сохранить</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style ="background-color: transparent; color: #ffff;  outline: 3px solid #ffffff; border-radius:10px">Закрыть</button>
+        </form>
+      </div>
+    </div>
   </div>
 </div>
 </body>

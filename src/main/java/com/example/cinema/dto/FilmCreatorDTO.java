@@ -16,8 +16,6 @@ public class FilmCreatorDTO extends GenericDTO implements Comparable<FilmCreator
     @Schema(description = "Полное имя", example = "Роберт Земекис")
     private String fullName;
 
-    @Schema(description = "Позиция при создании", example = "Режиссер")
-    private String position;
 
     @Override
     public int compareTo(FilmCreatorDTO o) {

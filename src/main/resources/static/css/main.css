@@ -128,7 +128,7 @@ color: #ffff;
 
 .container_grey{
      background-color: #F6F9F9;
-        height:310px;
+        height:270px;
         width:655px;
         border-radius:30px;
         border:1px solid #616161;
@@ -138,3 +138,19 @@ color: #ffff;
         padding-left:20px;
         margin-top: 50px;
 }
+
+#calendarModal .modal-content {
+  background-color: #E2E5FF;
+  color: #323844;
+}
+
+.btn_blue {
+    background-color: #323844;
+    color: #ffff;
+}
+
+.btn_white {
+    color: #323844;
+    background-color: #ffff;
+}
+

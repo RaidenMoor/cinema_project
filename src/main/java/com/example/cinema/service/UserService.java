@@ -59,7 +59,6 @@ public class UserService extends GenericService<User, UserDTO> {
         if (foundUser != null) {
             foundUser.setFirstName(userDTO.getFirstName());
             foundUser.setLastName(userDTO.getLastName());
-            foundUser.setBirthDate(userDTO.getBirthDate());
             foundUser.setEmail(userDTO.getEmail());
             foundUser.setLogin(userDTO.getLogin());
             foundUser.setUpdatedWhen(LocalDateTime.now());

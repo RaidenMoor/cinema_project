@@ -27,8 +27,6 @@ public class User extends GenericModel{
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
-    @Column(name = "birth_date", nullable = false)
-    private LocalDate birthDate;
 
     @Column(name = "email", nullable = false)
     private String email;

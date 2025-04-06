@@ -23,9 +23,6 @@ public class UserDTO extends GenericDTO {
     @Schema(description = "Фамилия", example = "Иванов")
     private String lastName;
 
-    @Schema(description = "Дата рождения")
-    private LocalDate birthDate;
-
     @Schema(description = "Адрес электронной почты", example = "name@domain.com")
     private String email;
 

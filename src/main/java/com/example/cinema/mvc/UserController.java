@@ -40,11 +40,14 @@ public class UserController {
     return "users/viewProfile";
   }
 
-  @GetMapping("/profile/update/{id}")
-  public String updateProfile(@PathVariable Long id, Model model) {
-    model.addAttribute("user", userService.getById(id));
-    return "users/updateProfile";
-  }
+  // Этот метод больше не нужен, так как форма редактирования находится в модальном окне
+    /*
+    @GetMapping("/profile/update/{id}")
+    public String updateProfile(@PathVariable Long id, Model model) {
+        model.addAttribute("user", userService.getById(id));
+        return "users/updateProfile";
+    }
+    */
 
   @PostMapping("/profile/update")
   public String updateProfile(@ModelAttribute("userForm") UserDTO userDTO) {

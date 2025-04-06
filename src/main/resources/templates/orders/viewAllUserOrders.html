@@ -9,7 +9,65 @@
 </head>
 
 <body>
+<div layout:fragment="content">
+    <div class="mt-5">
+        <h2>История бронирования</h2>
+        <div>
+            <table class="table table-hover mt-3">
+                <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Дата и время бронирования</th>
+                    <th scope="col">Название фильма</th>
+                    <th scope="col">Стоимость</th>
+                    <th scope="col"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="order : ${orders}">
+                    <td th:text="${order.orderId}"></td>
+                    <td th:text="${#temporals.format(order.orderCreatedWhen, 'dd.MM.yyyy HH:mm')}"></td>
+                    <td th:text="${order.filmTitle}"></td>
+                    <td th:text="${order.cost}"></td>
+                    <td>
+                        <div>
+                            <a class="btn btn-sm btn-outline-info" th:href="'/orders/get/' + ${order.orderId}" style="float: right; background-color: #E2E5FF; border-radius: 10px">Подробнее</a>
+                            <a th:if="${!order.purchase}" class="btn btn-sm btn-outline-danger" th:href="'/orders/delete/' + ${order.orderId}"
+                               onclick="return confirm('Вы действительно хотите отменить бронирование?');" style="float: right; background-color:white; border-radius:10px; border:2px solid #ff0000; color:#ff0000">Отменить</a>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
 
+        <div>
+            <nav aria-label="Pagination" th:if="${orders.totalPages gt 0}">
+                <ul class="pagination justify-content-center font-weight-bold">
+                    <li class="page-item" th:classappend="${orders.number eq 0} ? 'disabled'">
+                        <a class="page-link"
+                           th:href="@{/orders/user/{userId}?page={id}(id=${orders.number lt 2 ? 1 : orders.number}, userId=${userId})}"
+                           aria-label="Previous" title="Предыдущая страница" data-toggle="tooltip">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <li class="page-item" th:classappend="${i eq orders.number + 1} ? 'active'"
+                        th:each="i : ${#numbers.sequence( 1, orders.totalPages, 1)}">
+                        <a class="page-link" th:href="@{/orders/user/{userId}?page={id}(id=${i}, userId=${userId})}" th:text="${i}"
+                           th:title="${'Страница '+ i}" data-toggle="tooltip"></a>
+                    </li>
+                    <li class="page-item" th:classappend="${orders.number eq orders.totalPages - 1} ? 'disabled'">
+                        <a class="page-link"
+                           th:href="@{/orders/user/{userId}?page={id}(id=${orders.number + 2}, userId=${userId})}"
+                           aria-label="Next" title="Следующая страница" data-toggle="tooltip">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
 </body>
 
 </html>

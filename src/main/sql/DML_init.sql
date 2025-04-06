@@ -263,8 +263,8 @@ INSERT INTO public.roles (id, description, title) VALUES (1, 'Пользоват
 
 
 INSERT INTO public.users (id, created_by, created_when, deleted_by, deleted_when, is_deleted, updated_by, updated_when,
-                          birth_date, change_password_token, email, first_name, last_name, login, password, role_id)
-VALUES (1, 'anonymousUser', localtimestamp, null, null, false, null, null, '2000-01-01', null,
+                        change_password_token, email, first_name, last_name, login, password, role_id)
+VALUES (1, 'anonymousUser', localtimestamp, null, null, false, null, null, null,
         'u@mail.com', 'u', 'u', 'u', '$2a$10$O0umHw3.FGcL4ebia460BedI4Kb3ERiuxF.tGzPq6Y9kXNlMEZ0rC', 1);
 
 

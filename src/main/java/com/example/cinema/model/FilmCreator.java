@@ -19,7 +19,4 @@ public class FilmCreator extends GenericModel{
     @Column(name = "full_name", nullable = false)
     private String fullName;
 
-    @Column(name = "position", nullable = false)
-    private String position;
-
 }
