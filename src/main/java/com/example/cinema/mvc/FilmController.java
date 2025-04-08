@@ -1,18 +1,22 @@
 package com.example.cinema.mvc;
 
+import com.example.cinema.dto.*;
+import com.example.cinema.model.Genres;
+import com.example.cinema.service.CountryService;
+import com.example.cinema.service.GenreService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import com.example.cinema.dto.AddFilmCreatorDTO;
-import com.example.cinema.dto.FilmDTO;
-import com.example.cinema.dto.FilmSearchDTO;
 import com.example.cinema.service.FilmCreatorService;
 import com.example.cinema.service.FilmService;
 import com.example.cinema.utils.KinopoiskApi;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/films")
@@ -20,6 +24,8 @@ public class FilmController {
 
     private FilmService filmService;
     private FilmCreatorService filmCreatorService;
+    private GenreService genreService;
+    private CountryService countryService;
 
 
 
@@ -46,8 +52,20 @@ public class FilmController {
     }
 
     @PostMapping("/add")
-    public String create(@ModelAttribute("filmForm") FilmDTO filmDTO, @RequestParam("file") MultipartFile file) {
+    public String create( Model model,
+            @RequestParam(value = "page", defaultValue = "1") int page,
+            @RequestParam(value = "size", defaultValue = "5") int pageSize,
+            @ModelAttribute("filmForm") FilmDTO filmDTO, @RequestParam("file") MultipartFile file) {
         filmDTO.setRatingKp(filmService.getRating(filmDTO, KinopoiskApi.RatingType.KP));
+        PageRequest pageRequest = PageRequest.of(page - 1, pageSize);
+        Page<GenreDTO> genreDTOPage = genreService.getAll(pageRequest);
+        Object genres = new GenreDTO();
+        model.addAttribute("genres", genres);
+
+        Page<CountryDTO> countryDTOPage = countryService.getAll(pageRequest);
+        Object countries = new CountryDTO();
+        model.addAttribute("countries", countries);
+
         if(file != null && file.getSize() > 0) {
             filmService.create(filmDTO, file);
         } else {

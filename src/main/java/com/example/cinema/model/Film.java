@@ -38,6 +38,9 @@ public class Film extends GenericModel{
     @Column(name = "description", nullable = false)
     private String description;
 
+    @Column(name = "duration", nullable = false)
+    private String duration;
+
     @Column(name = "poster_file_name")
     private String posterFileName;
 

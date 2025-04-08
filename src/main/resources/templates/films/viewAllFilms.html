@@ -81,39 +81,6 @@
         </div>
     </div>
 
-    <div class="mt-5">
-        <hr class="hr"/>
-        <h3>Поиск фильма</h3>
-        <form method="POST" th:action="@{/films/search}" th:object="${filmSearchForm}">
-            <div class="mt-0 row g-2">
-                <div class="col-md">
-                    <div class="form-floating">
-                        <input name="filmTitle" type="text" class="form-control" id="filmTitle">
-                        <label for="filmTitle">Название фильма</label>
-                    </div>
-                </div>
-                <div class="col-md">
-                    <div class="form-floating">
-                        <input name="filmCreatorFullName" type="text" class="form-control" id="filmCreatorFullName">
-                        <label for="filmCreatorFullName">ФИО создателя</label>
-                    </div>
-                </div>
-                <div class="col-md">
-                    <div class="form-floating">
-                        <select class="form-select" name="genre" id="genre">
-                            <option selected th:value="null">Выберете жанр из списка</option>
-                            <option th:each="genre : ${T(com.example.cinema.model.Genre).values()}"
-                                    th:value="${genre}" th:text="${genre.getText()}"></option>
-                        </select>
-                        <label for="genre">Жанр фильма</label>
-                    </div>
-                </div>
-                <div class="row g-2">
-                    <button type="submit" class="btn btn-secondary">Найти фильм</button>
-                </div>
-            </div>
-        </form>
-    </div>
 </div>
 </body>
 

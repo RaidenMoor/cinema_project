@@ -2,10 +2,7 @@ package com.example.cinema.model;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.SequenceGenerator;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -26,4 +23,8 @@ public class Seat extends GenericModel{
 
     @Column(name = "place", nullable = false)
     private Byte place;
+
+    @ManyToOne
+    @JoinColumn(name = "hall_id", nullable = false)
+    private Hall hall;
 }

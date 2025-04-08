@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ru"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Места в кинозале</title>
+</head>
+
+<body>
+<div layout:fragment="content">
+    <h1></h1>
+    <h1>Список залов</h1>
+    <a href="/halls/add">Добавить зал</a>
+    <table class="table table-hover mt-3">
+        <thead >
+        <tr>
+            <th scope="col">Название зала</th>
+            <th scope="col"></th> <!-- Для кнопок -->
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="halls : ${data}">
+            <td th:text="${halls.id}">
+            </td>
+            <td>
+                <div>
+                    <a class="btn btn-sm btn-outline-success"
+                       th:href="@{/halls/edit/{id}(id=${halls.id})}"
+                       style="background-color:  #E2E5FF; border-radius: 10px; border: none; color:  #323844">Редактировать</a>
+
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

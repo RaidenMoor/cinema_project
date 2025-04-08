@@ -10,10 +10,10 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Schema(description = "DTO страны")
+@Schema(description = "DTO жанра")
 public class GenreDTO extends GenericDTO implements Comparable<GenreDTO>  {
 
-    @Schema(description = "Страна", example = "Россия")
+    @Schema(description = "Жанр", example = "Драма")
     private String genreName;
 
     @Override

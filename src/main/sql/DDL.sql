@@ -41,14 +41,13 @@ create table films
     is_deleted       boolean,
     updated_by       varchar(255),
     updated_when     timestamp(6),
-    country_id     bigint not null,  -- Foreign Key for Country
+    country    varchar(255) not null,
     description      varchar(255) not null,
-    genre       bigint     not null,  -- Foreign Key for Genre
+    genre       varchar(255)     not null,
+    duration int;
     poster_file_name varchar(255),
     release_year     smallint     not null,
     title            varchar(255) not null,
-    constraint fk_films_country
-        foreign key (country_id) references countries (id),
 
 );
 
@@ -109,7 +108,7 @@ create table seats
     updated_when timestamp(6),
     place        smallint     not null,
     row          smallint     not null,
-    hall_id      bigint       not null,  -- Foreign Key for Hall
+    hall_id      bigint       not null,
     constraint fk_seats_hall
         foreign key (hall_id) references halls (id)
 );
@@ -204,5 +203,5 @@ create table halls (
         updated_when timestamp(6),
         count_row smallint not null,
         count_place smallint not null,
-        hall_type varchar(10) not null
+        hall_type varchar(20) not null
 );

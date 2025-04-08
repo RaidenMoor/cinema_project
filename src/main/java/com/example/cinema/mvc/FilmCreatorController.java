@@ -140,33 +140,44 @@ public class FilmCreatorController {
         model.addAttribute("activeSection", section);
         if ("directors".equals(section)) {
             model.addAttribute("filmCreator", filmCreatorService.getById(id));
-            return "filmCreators/updateFilmCreator"; // Создайте отдельную страницу для редактирования
+            return "filmCreators/updateFilmCreator";
         }
         else if ("countries".equals(section)) {
             model.addAttribute("country", countryService.getById(id));
-            return "filmCreators/updateCountry"; // Создайте страницу для редактирования стран
+            return "filmCreators/updateCountry";
         }
         else if ("genres".equals(section)) {
-            model.addAttribute("genre", genreService.getById(id));
-            return "filmCreators/updateGenre"; // Создайте страницу для редактирования жанров
+            model.addAttribute("genres", genreService.getById(id));
+            return "filmCreators/updateGenre";
         }
         return "redirect:/filmCreators?section=" + section;
     }
 
 
     @PostMapping("/update")
-    public String update(@ModelAttribute("filmCreator") FilmCreatorDTO filmCreatorDTO, @RequestParam("section") String section,
-                         @ModelAttribute("country") CountryDTO countryDTO,
-                         @ModelAttribute("genres") GenreDTO genreDTO) {
-        if ("directors".equals(section)) {
-            filmCreatorService.update(filmCreatorDTO);
+    public String update(
+            @RequestParam("section") String section,
+            @ModelAttribute("filmCreatorForm") FilmCreatorDTO filmCreatorDTO,
+            @ModelAttribute("countryForm") CountryDTO countryDTO,
+            @ModelAttribute("genresForm") GenreDTO genreDTO,
+            BindingResult result
+    ) {
+        if (result.hasErrors()) {
+            return "filmCreators/update" + section.substring(0, 1).toUpperCase() + section.substring(1);
         }
-        else if ("countries".equals(section)) {
-            countryService.update(countryDTO);
+
+        switch(section) {
+            case "directors":
+                filmCreatorService.update(filmCreatorDTO);
+                return "redirect:/filmCreators?section=" + section;
+            case "countries":
+                countryService.update(countryDTO);
+                return "redirect:/filmCreators?section=" + section;
+            case "genres":
+                genreService.update(genreDTO);
+                return "redirect:/filmCreators?section=" + section;
         }
-        else if ("genres".equals(section)) {
-            genreService.update(genreDTO);
-        }
+
         return "redirect:/filmCreators?section=" + section;
     }
 

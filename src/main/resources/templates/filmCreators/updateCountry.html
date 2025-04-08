@@ -1,18 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+
 <head>
     <meta charset="UTF-8">
     <title>Редактировать страну</title>
 </head>
 <body>
 <div layout:fragment="content">
-  <h3 class="mt-3 mb-3" th:text="'Изменить страну: ' + ${country.countryName}"></h3>
-  <form class="needs-validation" style="max-width: 50vw" method="POST" th:action="@{/update(section='countries')}" th:object="${country}">
-    <input type="hidden" name="id" th:value="${country.id}">
+  <h3 class="mt-3 mb-3" th:text="'Редактировать страну: ' + ${country.getCountryName()}"></h3>
+  <form class="needs-validation" style="max-width: 50vw" method="POST" th:action="@{/filmCreators/update(section='countries')}" th:object="${countryForm}">
+    <input type="hidden" name="id" th:value="${country.getId()}">
     <div class="mt-3 row g-2">
       <div class="col-md">
         <div class="form-floating">
-          <input name="countryName" th:value="${country.countryName}" type="text" class="form-control" id="countryName" required>
+          <input name="countryName" th:value="${country.getCountryName()}" type="text" class="form-control" id="countryName" required>
           <label for="countryName">Название страны</label>
         </div>
       </div>
@@ -21,7 +24,6 @@
       <button type="submit" class="btn btn-primary">Обновить</button>
       <button type="button" class="btn btn-secondary" onclick="window.history.back()">Назад</button>
     </div>
-    <input type="hidden" name="section" th:value="${activeSection}" />
   </form>
 </div>
 </body>

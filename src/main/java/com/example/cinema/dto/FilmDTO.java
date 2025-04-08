@@ -29,6 +29,10 @@ public class FilmDTO extends GenericDTO {
     @Schema(description = "Описание фильма", example = "Подросток Марти с помощью машины времени...")
     private String description;
 
+    @Schema(description = "Длительность фильма", example = "60 минут")
+    private String duration;
+
+
     @Schema(description = "Имя файла с постером", example = "1.jpg")
     private String posterFileName;
 

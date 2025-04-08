@@ -28,6 +28,7 @@
        
        class="btn btn-primary" role="button"
        th:if="${#authentication.getPrincipal().getUserId()} == ${user.id}" aria-disabled="true"
+       data-bs-toggle="modal" data-bs-target="#editUserModal"
        style="background-color: #323844; border-radius: 10px; color: white;
         font-weight: bold; margin-top: 20px;">Редактировать</a>
   <div sec:authorize="isAuthenticated() && hasRole(T(com.example.cinema.constants.UserRolesConstants).USER)">
@@ -46,6 +47,63 @@
   -->
   </div>
 
+</div>
+<!-- Модальное окно -->
+<div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content" style="border-radius: 15px; border: none; box-shadow: 0 5px 15px rgba(0,0,0,0.3);">
+      <!-- Заголовок -->
+      <div class="modal-header" style="background-color: #323844; color: white; border-radius: 15px 15px 0 0;">
+        <h5 class="modal-title" id="editUserModalLabel">Редактирование профиля</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <!-- Тело модального окна -->
+      <div class="modal-body" style="background-color: #f8f9fa; padding: 25px;">
+        <form id="userEditForm" th:action="@{/profile/update}" method="post">
+          <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+
+          <div class="mb-3">
+            <label for="login" class="form-label">Логин</label>
+            <input type="text" class="form-control" id="login"
+                   th:value="${user.username}"
+                   style="border-radius: 8px; border: 1px solid #ced4da;">
+          </div>
+
+          <div class="mb-3">
+            <label for="email" class="form-label">Почта</label>
+            <input type="email" class="form-control" id="email"
+                   th:value="${user.email}"
+                   style="border-radius: 8px; border: 1px solid #ced4da;">
+          </div>
+
+          <div class="mb-3">
+            <label for="firstName" class="form-label">Имя</label>
+            <input type="text" class="form-control" id="firstName"
+                   th:value="${user.firstName}"
+                   style="border-radius: 8px; border: 1px solid #ced4da;">
+          </div>
+
+          <div class="mb-3">
+            <label for="lastName" class="form-label">Фамилия</label>
+            <input type="text" class="form-control" id="lastName"
+                   th:value="${user.lastName}"
+                   style="border-radius: 8px; border: 1px solid #ced4da;">
+          </div>
+        </form>
+      </div>
+
+      <!-- Футер модального окна -->
+      <div class="modal-footer" style="background-color: #e9ecef; border-radius: 0 0 15px 15px;">
+        <button type="button" class="btn btn-secondary"
+                style="border-radius: 8px; padding: 8px 20px;"
+                data-bs-dismiss="modal">Отмена</button>
+        <button type="submit" form="userEditForm" class="btn btn-primary"
+                style="background-color: #323844; border: none;
+                       border-radius: 8px; padding: 8px 20px;">Сохранить</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 </body>
