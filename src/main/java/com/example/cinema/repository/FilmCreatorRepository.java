@@ -9,4 +9,5 @@ import java.util.List;
 public interface FilmCreatorRepository extends GenericRepository<FilmCreator> {
 
     List<FilmCreator> getAllByFullNameContainsIgnoreCase(String fullName);
+    List<FilmCreator> findByIsDeletedFalse();
 }

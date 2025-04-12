@@ -1,4 +1,4 @@
-package com.example.cinema.model;
+package com.example.cinema.model.enums;
 
 public enum Genre {
     FANTASY("Фантастика"),

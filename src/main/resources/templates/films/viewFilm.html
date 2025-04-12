@@ -11,7 +11,10 @@
 
 <body>
 <div layout:fragment="content">
-    <div class="card mt-2 mb-3" style="border-radius: 15px; background-color: #F6F9F9">
+    <h1></h1>
+    <div class="d-flex justify-content-center" style="margin-top: 50px;">
+    <div class="card mt-5 mb-3" style="border-radius: 15px; background-color: #F6F9F9; width:699px;
+        height:477px">
         <div class="row g-0">
             <div class="col-md-3 my-2">
                 <img th:if="${film.posterFileName != null}" style= "border-radius: 15px" th:src="'/posters/' + ${film.posterFileName}" class="img-fluid rounded-start ms-2" alt="">
@@ -19,15 +22,15 @@
             <div class="col-md-9">
                 <div class="card-body">
                     <h4 class="card-title mt-3 mb-4" th:text="${film.title}"></h4>
-                    <p class="card-text"><span class="text-muted">Жанр: </span><span th:text="${film.genre.text}"></span>
+                    <p class="card-text"><span class="text-muted" style="font-weight: bold; color: #747474">Жанр: </span><span style="color:black" th:text="${film.genre.text}"></span>
                         <span  th:if="${film.ratingKp != null}" style="float: right" ></span>
                     </p>
-                    <p class="card-text"><span class="text-muted">Год выхода: </span><span th:text="${film.releaseYear}"></span></p>
-                    <p class="card-text mb-4"><span class="text-muted">Страна производства: </span><span th:text="${film.country}"></span></p>
+                    <p class="card-text"><span class="text-muted" style="font-weight: bold; color: #747474">Год выхода: </span><span style="color:black" th:text="${film.releaseYear}"></span></p>
+                    <p class="card-text mb-4"><span class="text-muted" style="font-weight: bold; color: #747474">Страна производства: </span><span style="color:black" th:text="${film.country.text}"></span></p>
                     <p class="card-text" th:each="filmCreator : ${film.filmCreators}">
-                        <span th:text="'Режиссер: ' + ${filmCreator.fullName}"></span>
+                        <span  th:text="'Режиссер: ' + ${filmCreator.fullName}"></span>
                     </p>
-                    <p class="card-text mt-5" th:text="${film.description}"></p>
+                    <p class="card-text mt-5" style="font-weight: bold; color: #black" th:text="${film.description}"></p>
                 </div>
                 <div class="row my-3 mx-4" sec:authorize="isAuthenticated() && (hasRole('ADMIN') || hasRole('MANAGER'))">
                     <a class="btn btn-outline-dark" th:href="'/films/update/' + ${film.id}" role="button" style="background-color: #323844; border-radius: 10px; color: white; font-weight: bold">
@@ -37,12 +40,8 @@
             </div>
         </div>
     </div>
-    <div sec:authorize="isAuthenticated() && (hasRole('ADMIN') || hasRole('MANAGER'))">
-        <hr class="mt-3 hr"/>
-        <div class="row g-2">
-            <a class="btn btn-secondary" th:href="'/films/update/' + ${film.id}">Редактировать фильм</a>
         </div>
-    </div>
+
 
     <hr class="hr"/>
 
@@ -78,13 +77,15 @@
         </tbody>
     </table>
     <!--        <hr class="mt-3 hr"/>-->
+
     <form class="needs-validation" method="POST" th:action="@{/filmSessions/add}" th:object="${filmSessionForm}"
           sec:authorize="isAuthenticated() && (hasRole('ADMIN') || hasRole('MANAGER'))">
         <input type="hidden" name="filmId" th:value="${film.id}">
+        <div class="col-md-2" >
+            <h5 class="ms-2">Добавить сеанс:</h5>
+        </div>
         <div class="mt-3 row g-2 align-items-center">
-            <div class="col-md-2">
-                <h5 class="ms-2">Добавить сеанс:</h5>
-            </div>
+
             <div class="col-md">
                 <div class="form-floating">
                     <input name="startDate" type="date" class="form-control" id="startDate" required>
@@ -105,29 +106,15 @@
             </div>
         </div>
         <div class="mt-2 row g-2">
-            <button type="submit" class="btn btn-secondary">Добавить сеанс</button>
+            <button type="submit" class="btn btn-secondary" style="background-color:#C78EFF; border-radius: 10px">Добавить сеанс</button>
         </div>
     </form>
+
+    <button type="button" class="btn btn-secondary" onclick="window.history.back()" style="background-color:#323844; color:#ffff; width: 1290px; margin-top: 20px; border-radius: 10px">Назад</button>
     <div>
     </div>
 
-    <hr class="mt-3 hr"/>
-    <h3 class="mt-3 mb-3">Отзывы:</h3>
-    <div class="card mt-2" style="background-color: mintcream" th:each="review : ${film.reviews}">
-        <div class="card-body">
-            <h6 class="card-title" th:text="${review.userDTO.firstName}"></h6>
-            <h6 class="card-subtitle mb-2 text-muted" th:text="${#temporals.format(review.createdWhen, 'dd.MM.yyyy HH:mm')}"></h6>
-            <p class="card-text" th:text="${review.content}"></p>
-        </div>
-        <div sec:authorize="isAuthenticated() && (hasRole('ADMIN') || hasRole('MANAGER'))">
-            <a th:if="${!review.isDeleted()}" class="btn btn-sm btn-outline-danger" th:href="'/reviews/delete/' + ${review.id}"
-               onclick="return confirm('Удалить отзыв?');" style="float: right">Удалить</a>
-            <a th:if="${review.isDeleted()}" class="btn btn-sm btn-outline-warning" th:href="'/reviews/restore/' + ${review.id}" style="float: right">Восстановить</a>
-        </div>
-    </div>
-    <div class="row g-2 mt-2" sec:authorize="!(hasRole('ADMIN') || hasRole('MANAGER'))">
-        <a class="btn btn-outline-success" th:href="'/reviews/add/' + ${film.id}">Оставить отзыв</a>
-    </div>
+
 </div>
 </body>
 

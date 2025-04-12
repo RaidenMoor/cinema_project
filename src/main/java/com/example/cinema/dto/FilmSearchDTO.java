@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import com.example.cinema.model.Genre;
+import com.example.cinema.model.enums.Genre;
 
 @Getter
 @Setter

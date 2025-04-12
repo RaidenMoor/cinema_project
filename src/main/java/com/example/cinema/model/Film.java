@@ -1,5 +1,7 @@
 package com.example.cinema.model;
 
+import com.example.cinema.model.enums.Countries;
+import com.example.cinema.model.enums.Genre;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
@@ -28,12 +30,16 @@ public class Film extends GenericModel{
     @Column(name = "release_year", nullable = false, length = 4)
     private Short releaseYear;
 
-    @Column(name = "country", nullable = false)
-    private String country;
 
     @Column(name = "genre", nullable = false)
     @Enumerated
     private Genre genre;
+
+
+    @Column(name = "country", nullable = false)
+    @Enumerated
+    private Countries country;
+
 
     @Column(name = "description", nullable = false)
     private String description;

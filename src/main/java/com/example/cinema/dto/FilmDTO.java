@@ -1,11 +1,12 @@
 package com.example.cinema.dto;
 
+import com.example.cinema.model.enums.Countries;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import com.example.cinema.model.Genre;
+import com.example.cinema.model.enums.Genre;
 
 @Getter
 @Setter
@@ -21,7 +22,7 @@ public class FilmDTO extends GenericDTO {
     private Short releaseYear;
 
     @Schema(description = "Страна производства фильма", example = "США")
-    private String country;
+    private Countries country;
 
     @Schema(description = "Жанр фильма", example = "FANTASY")
     private Genre genre;

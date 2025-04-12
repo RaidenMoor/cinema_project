@@ -50,7 +50,7 @@
         <label class="form-label">Тип зала:</label>
         <select class="form-select" name="hallType" th:object="${hallType}">
           <option value="">Выберете тип зала</option>
-          <option th:each="type : ${T(com.example.cinema.model.HallType).values()}"
+          <option th:each="type : ${T(com.example.cinema.model.enums.HallType).values()}"
                   th:value="${type}"
                   th:text="${type.displayName}"></option>
         </select>

@@ -33,6 +33,7 @@ public interface SecurityConstants {
       "/films/delete/{id}",
       "/films/restore/{id}",
       "/films/{filmId}/addFilmCreator",
+
       "/films/addFilmCreator",
       "/films/{filmId}/deleteFilmCreator/{filmCreatorId}",
       "/films/search"

@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface CountryRepository extends GenericRepository<Country> {
     List<Country> getAllByCountryNameContainsIgnoreCase(String countryName);
+
 }

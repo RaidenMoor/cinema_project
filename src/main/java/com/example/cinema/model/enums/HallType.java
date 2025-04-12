@@ -1,5 +1,8 @@
-package com.example.cinema.model;
+package com.example.cinema.model.enums;
 
+import lombok.Getter;
+
+@Getter
 public enum HallType {
     VIP("VIP"),
     SOFT("Мягкий"),

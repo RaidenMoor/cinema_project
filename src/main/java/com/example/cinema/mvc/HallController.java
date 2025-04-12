@@ -1,25 +1,18 @@
 package com.example.cinema.mvc;
 
 import com.example.cinema.dto.HallDTO;
-import com.example.cinema.dto.SeatDTO;
-import com.example.cinema.model.Hall;
-import com.example.cinema.model.HallType;
+import com.example.cinema.model.enums.HallType;
 import com.example.cinema.service.HallService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.security.Principal;
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/halls")

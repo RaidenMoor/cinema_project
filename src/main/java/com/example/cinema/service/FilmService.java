@@ -216,7 +216,7 @@ public class FilmService extends GenericService<Film, FilmDTO> {
         return kinopoiskApi.getRating(
                 filmDTO.getTitle(),
                 String.valueOf(filmDTO.getReleaseYear()),
-                filmDTO.getCountry(),
+                filmDTO.getCountry().getText(),
                 ratingType
         );
     }

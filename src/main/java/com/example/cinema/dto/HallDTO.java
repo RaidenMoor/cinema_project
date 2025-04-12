@@ -1,6 +1,6 @@
 package com.example.cinema.dto;
 
-import com.example.cinema.model.HallType;
+import com.example.cinema.model.enums.HallType;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;

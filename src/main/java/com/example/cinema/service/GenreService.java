@@ -4,8 +4,6 @@ package com.example.cinema.service;
 
 import com.example.cinema.dto.GenreDTO;
 import com.example.cinema.mapper.GenreMapper;
-import com.example.cinema.model.Film;
-import com.example.cinema.model.Genre;
 import com.example.cinema.model.Genres;
 import com.example.cinema.repository.GenreRepository;
 import org.springframework.security.core.context.SecurityContextHolder;
