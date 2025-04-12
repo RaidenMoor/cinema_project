@@ -98,6 +98,7 @@ public interface SecurityConstants {
       "/seats/update/{id}",
       "/seats/search",
           "/halls",
+          "/halls/add",
           "/halls/edit/{id}"
   );
 

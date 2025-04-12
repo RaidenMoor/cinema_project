@@ -19,4 +19,7 @@ public class SeatDTO extends GenericDTO {
     @Schema(description = "Место в ряду")
     private Byte place;
 
+    @Schema(description = "Зал")
+    private Long hall_id;
+
 }

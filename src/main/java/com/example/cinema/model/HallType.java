@@ -5,13 +5,14 @@ public enum HallType {
     SOFT("Мягкий"),
     STANDART("Стандартный");
 
-    private final String text;
 
-    HallType(String text) {
-        this.text = text;
+    private final String displayName;
+
+    HallType(String displayName) {
+        this.displayName = displayName;
     }
 
-    public String getText() {
-        return text;
+    public String getDisplayName() {
+        return displayName;
     }
 }

@@ -1,9 +1,13 @@
 package com.example.cinema.model;
 
+import com.example.cinema.dto.SeatDTO;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -21,13 +25,19 @@ public class Hall extends GenericModel {
     private Long id;
 
 
-    @Column(nullable = false)
-    private Short count_row;
+    @Column(name = "count_row",nullable = false)
+    private Short countRow;
 
-    @Column(nullable = false)
-    private Short count_place;
+    @Column(name = "count_place",nullable = false)
+    private Short countPlace;
 
-    @Column(nullable = false, length = 20)
-    private String hall_type;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "hall_type", nullable = false)
+    private HallType hallType;
+
+    @OneToMany(mappedBy = "hall", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Seat> seats = new ArrayList<>();
+
+
 
 }
