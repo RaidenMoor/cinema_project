@@ -1,8 +1,12 @@
 package com.example.cinema.mvc;
 
+import com.example.cinema.dto.FilmDTO;
+import com.example.cinema.dto.FilmSessionDTO;
 import com.example.cinema.dto.HallDTO;
+import com.example.cinema.model.Hall;
 import com.example.cinema.model.enums.HallType;
 import com.example.cinema.service.HallService;
+import com.example.cinema.utils.KinopoiskApi;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -11,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -48,10 +53,24 @@ public class HallController  {
         return "halls/hallConstructor";
     }
 
-    @GetMapping("/edit/{id}")
-    public String editHall(@PathVariable("id") Long id, Model model) {
+    @GetMapping("/constructor/{id}")
+    public String constructorHall(@PathVariable("id") Long id, Model model) {
         model.addAttribute("hall", hallService.getById(id));
         return "halls/hallConstructor";
+    }
+
+    @GetMapping("/update/{id}")
+    public String updateHall(Model model, @PathVariable Long id) {
+        HallDTO hallDTO = hallService.getById(id);
+        model.addAttribute("hall", hallDTO); // Ключевая строка!
+        model.addAttribute("hallTypes", HallType.values());
+        return "halls/updateHall";
+    }
+
+    @PostMapping("/update")
+    public String update(@ModelAttribute("hall") HallDTO hallDTO) {
+        hallService.update(hallDTO);
+        return "redirect:/halls";
     }
 
     @GetMapping("/add")
