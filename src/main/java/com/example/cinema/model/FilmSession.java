@@ -26,6 +26,10 @@ public class FilmSession extends GenericModel{
     @JoinColumn(name = "film_id", foreignKey = @ForeignKey(name = "fk_filmsessions_films"), nullable = false)
     private Film film;
 
+    @ManyToOne
+    @JoinColumn(name = "hall_id", foreignKey = @ForeignKey(name = "fk_film_session_hall"), nullable = false)
+    private Hall hall;
+
     @Column(name = "start_date", nullable = false)
     private LocalDate startDate;
 

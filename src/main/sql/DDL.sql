@@ -92,7 +92,10 @@ create table film_sessions
     start_time   time             not null,
     film_id      bigint           not null
         constraint fk_filmsessions_films
-            references films
+            references films,
+     hall_id      bigint       not null,
+        constraint fk_film_session_hall
+            foreign key (hall_id) references halls (id)
 );
 
 create table seats

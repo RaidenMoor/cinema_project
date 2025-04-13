@@ -41,6 +41,7 @@ public class FilmSessionController {
     @GetMapping("/update/{id}")
     public String update(Model model, @PathVariable Long id) {
         FilmSessionDTO filmSessionDTO = filmSessionService.getById(id);
+
         model.addAttribute("filmSession", filmSessionDTO);
         model.addAttribute("filmTitle", filmService.getById(filmSessionDTO.getFilmId()).getTitle());
         return "filmSessions/updateFilmSession";

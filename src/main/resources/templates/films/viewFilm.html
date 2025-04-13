@@ -52,7 +52,7 @@
             <th scope="col">Дата:</th>
             <th scope="col">Время:</th>
             <th scope="col">Цена билета:</th>
-            <th scope="col">Тип зала</th>
+            <th scope="col">Номер зала</th>
         </tr>
         </thead>
         <tbody>
@@ -67,8 +67,9 @@
             <td sec:authorize="isAuthenticated() && (hasRole('ADMIN') || hasRole('MANAGER'))"
                 th:text="${filmSession.startTime}"></td>
             <td th:text="${filmSession.price}"></td>
+            <td th:text = "${filmSession.hallId}"></td>
             <td sec:authorize="isAuthenticated() && (hasRole('ADMIN') || hasRole('MANAGER'))">
-                <a class="btn btn-sm btn-outline-success" th:href="'/filmSessions/update/' + ${filmSession.getId()}" style="float: right">Редактировать</a>
+                <a class="btn btn-sm btn-outline-success" th:href="'/filmSessions/update/' + ${filmSession.getId()}" style="float: right; margin-left: 20px; outline:none;background-color: #323844; color: #ffff; border-radius: 10px;">Редактировать</a>
                 <a th:if="${!filmSession.isDeleted()}" class="btn btn-sm btn-outline-danger" th:href="'/filmSessions/delete/' + ${filmSession.getId()}"
                    onclick="return confirm('Вы действительно хотите удалить сеанс?');" style="float: right">Удалить</a>
                 <a th:if="${filmSession.isDeleted()}" class="btn btn-sm btn-outline-warning" th:href="'/filmSessions/restore/' + ${filmSession.getId()}" style="float: right">Восстановить</a>
@@ -102,6 +103,17 @@
                 <div class="form-floating">
                     <input name="price" type="number" min="0" class="form-control" id="price" required>
                     <label for="price">Цена</label>
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="form-floating">
+                    <select name="hallId" class="form-select" id="hallSelect" th:field="*{hallId}" required>
+                        <option th:each="hall : ${halls}"
+                                th:value="${hall.id}"
+                                th:text="${hall.id} + ' (' + ${hall.hallType} + ')' + ' - ' + ${hall.countRow} + ' рядов, ' + ${hall.countPlace} + ' мест'">
+                        </option>
+                    </select>
+                    <label for="hallSelect">Зал</label>
                 </div>
             </div>
         </div>

@@ -1,6 +1,7 @@
 package com.example.cinema.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,6 +19,10 @@ public class FilmSessionDTO extends GenericDTO implements Comparable<FilmSession
 
     @Schema(description = "Идентификатор фильма")
     private Long filmId;
+
+    @NotNull(message = "Необходимо выбрать зал")
+    @Schema(description = "Идентификатор зала")
+    private Long hallId;
 
     @Schema(description = "Дата сеанса")
     private LocalDate startDate;

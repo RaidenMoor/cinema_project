@@ -14,4 +14,6 @@ public class FilmSessionService extends GenericService<FilmSession, FilmSessionD
         mapper = filmSessionMapper;
     }
 
+
+
 }

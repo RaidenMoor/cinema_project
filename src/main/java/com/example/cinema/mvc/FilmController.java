@@ -5,8 +5,7 @@ import com.example.cinema.model.Genres;
 import com.example.cinema.repository.CountryRepository;
 import com.example.cinema.repository.FilmCreatorRepository;
 import com.example.cinema.repository.GenreRepository;
-import com.example.cinema.service.CountryService;
-import com.example.cinema.service.GenreService;
+import com.example.cinema.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -16,8 +15,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import com.example.cinema.service.FilmCreatorService;
-import com.example.cinema.service.FilmService;
 import com.example.cinema.utils.KinopoiskApi;
 
 import java.util.List;
@@ -28,6 +25,7 @@ public class FilmController {
 
     private FilmService filmService;
     private FilmCreatorService filmCreatorService;
+    private HallService hallService;
 
 
 
@@ -44,7 +42,12 @@ public class FilmController {
     }
 
     @GetMapping("/get/{id}")
-    public String viewFilm(@PathVariable Long id, Model model) {
+    public String viewFilm(@PathVariable Long id,  Model model) {
+        FilmSessionDTO filmSessionForm = new FilmSessionDTO();
+        filmSessionForm.setFilmId(id); // Устанавливаем ID фильма
+        model.addAttribute("filmSessionForm", filmSessionForm);
+
+        model.addAttribute("halls", hallService.getAll());
         model.addAttribute("film", filmService.getExtendedById(id));
         return "films/viewFilm";
     }
@@ -133,5 +136,10 @@ public class FilmController {
     @Autowired
     public void setFilmCreatorService(FilmCreatorService filmCreatorService) {
         this.filmCreatorService = filmCreatorService;
+    }
+
+    @Autowired
+    public void setHallService(HallService hallService) {
+        this.hallService = hallService;
     }
 }
