@@ -50,7 +50,7 @@
                             <p class="card-text"><span class="text-muted">Страна производства: </span><span th:text="${film.country}"></span></p>
                         </div>
                         <div class="row my-3 mx-4">
-                            <a class="btn btn-outline-dark" href="/films/get/9" role="button" style="background-color: #323844; border-radius: 10px; color: white; font-weight: bold">
+                            <a class="btn btn-outline-dark" hth:href="'/films/get/' +  ${film.id}"  role="button" style="background-color: #323844; border-radius: 10px; color: white; font-weight: bold">
                                 Подробнее
                             </a>
                         </div>

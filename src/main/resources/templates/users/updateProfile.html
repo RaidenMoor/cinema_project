@@ -6,41 +6,114 @@
 <head>
   <meta charset="UTF-8">
   <title>Изменение профиля</title>
+  <style>
+    .profile-container {
+      background-color: #323844;
+      border-radius: 30px;
+      padding: 40px;
+      max-width: 600px;
+      margin: 0 auto;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .profile-form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .form-label {
+      color: #323844;
+      font-weight: 500;
+    }
+
+    .form-control {
+      background-color: #ffff;
+      border: 1px solid #5a6378;
+      color: #ffffff;
+      border-radius: 8px;
+      padding: 10px 15px;
+    }
+
+    .form-control:focus {
+      background-color: #ffff;
+      color: #ffffff;
+      border-color: #7a85a0;
+      box-shadow: 0 0 0 0.25rem rgba(122, 133, 160, 0.25);
+    }
+
+    .button-group {
+      display: flex;
+      justify-content: flex-end;
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .btn-save {
+      background-color: #E2E5FF;
+      color: #323844;
+      border: none;
+      border-radius: 10px;
+      padding: 10px 25px;
+      font-weight: 600;
+    }
+
+    .btn-cancel {
+      background-color: transparent;
+      color: #ffffff;
+      border: 3px solid #ffffff;
+      border-radius: 10px;
+      padding: 10px 25px;
+      font-weight: 600;
+    }
+
+    h1 {
+      color: #ffffff;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+  </style>
 </head>
 
 <body>
-<div layout:fragment="content">
-  <h1>Редактировать профиль</h1>
-  <form method="POST" th:action="@{/users/profile/update}" th:object="${userForm}" style="margin: 50px; background-color: #323844">
-    <input type="hidden" name="id" th:value="${user.id}">
-    <div class="row">
-      <div class="col-auto mb-3">
+<div layout:fragment="content" style="padding: 50px;">
+  <div class="profile-container">
+    <h1>Редактировать профиль</h1>
+    <form method="POST" th:action="@{/users/profile/update}" th:object="${userForm}" class="profile-form">
+      <input type="hidden" name="id" th:value="${user.id}">
+
+      <div class="form-group">
         <label for="login" class="form-label">Логин</label>
         <input th:value="${user.login}" name="login" type="text" class="form-control" id="login" required>
       </div>
-      <div class="col-auto mb-3">
+
+      <div class="form-group">
         <label for="email" class="form-label">Почта</label>
         <input th:value="${user.email}" name="email" type="email" class="form-control" id="email" required>
       </div>
-    </div>
 
-    <div class="row">
-      <div class="col-auto mb-3">
+      <div class="form-group">
         <label for="firstName" class="form-label">Имя</label>
         <input th:value="${user.firstName}" name="firstName" type="text" class="form-control" id="firstName" required>
       </div>
-      <div class="col-auto mb-3">
+
+      <div class="form-group">
         <label for="lastName" class="form-label">Фамилия</label>
         <input th:value="${user.lastName}" name="lastName" type="text" class="form-control" id="lastName" required>
       </div>
-    </div>
 
-
-    <button type="submit" class="btn btn-primary" style ="background-color: #E2E5FF; color: #323844; border:none;border-radius:10px">Сохранить</button>
-    <button type="button" class="btn btn-secondary" onclick="window.history.back()" style ="background-color: transparent; color: #ffff;  outline: 3px solid #ffffff; border-radius:10px">Закрыть</button>
-  </form>
-
-
+      <div class="button-group">
+        <button type="button" class="btn-cancel" onclick="window.history.back()">Закрыть</button>
+        <button type="submit" class="btn-save">Сохранить</button>
+      </div>
+    </form>
+  </div>
 </div>
 </body>
 

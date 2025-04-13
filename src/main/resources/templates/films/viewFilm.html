@@ -17,7 +17,7 @@
         height:477px">
         <div class="row g-0">
             <div class="col-md-3 my-2">
-                <img th:if="${film.posterFileName != null}" style= "border-radius: 15px" th:src="'/posters/' + ${film.posterFileName}" class="img-fluid rounded-start ms-2" alt="">
+                <img th:if="${film?.posterFileName != null}" style= "border-radius: 15px" th:src="'/posters/' + ${film.posterFileName}" class="img-fluid rounded-start ms-2" alt="">
             </div>
             <div class="col-md-9">
                 <div class="card-body">

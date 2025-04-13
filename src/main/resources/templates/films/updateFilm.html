@@ -9,7 +9,73 @@
 </head>
 
 <body>
+<div layout:fragment="content">
+    <h3 class="mt-3 mb-3">Изменить фильм</h3>
+    <form enctype="multipart/form-data" class="needs-validation" style="max-width: 50vw" method="POST" th:action="@{/films/update}" th:object="${filmForm}">
+        <input type="hidden" name="id" th:value="${film.id}">
+        <input type="hidden" name="posterFileName" th:value="${film.posterFileName}">
+        <div class="mt-3 row g-2">
+            <div class="col-md">
+                <div class="form-floating">
+                    <input name="title" th:value="${film.title}" type="text" class="form-control" id="title" required>
+                    <label for="title">Название фильма</label>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-floating">
+                    <select class="form-select" name="genre" id="genre" th:object="${film}" th:field="*{genre}" required>
+                        <option th:selected="${film.genre.text}"
+                                th:each="genre : ${T(ru.sbercourse.cinema.ticketoffice.model.Genre).values()}"
+                                th:value="${genre}" th:text="${genre.text}"></option>
+                    </select>
+                    <label for="genre">Жанр фильма</label>
+                </div>
+            </div>
+        </div>
+        <div class="mt-3 row g-2">
+            <div class="col-md">
+                <div class="form-floating">
+                    <input name="country" th:value="${film.country}" type="text" class="form-control" id="country" required>
+                    <label for="country">Страна</label>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-floating">
+                    <input name="releaseYear" th:value="${film.releaseYear}" type="number" min="1895"  max="2999" class="form-control" id="releaseYear" required>
+                    <label for="releaseYear">Год выхода</label>
+                </div>
+            </div>
+        </div>
 
+        <!--        <hr class="hr mb-2"/>-->
+        <h5 class="mt-3">Создатели:</h5>
+        <div class="mt-1 row g-1" th:each="filmCreator : ${filmCreators}">
+            <div class="col-md" th:text="${filmCreator.position} + ': '"></div>
+            <div class="col-md" th:text="${filmCreator.fullName}"></div>
+            <div class="col-md">
+                <a class="btn btn-sm btn-outline-danger" th:href="'/films/' + ${film.id} + '/deleteFilmCreator/' + ${filmCreator.id}"
+                   onclick="return confirm('Удалить создателя из списка?');" style="float: right">Удалить</a>
+            </div>
+        </div>
+        <div class="mt-1 row g-1">
+            <a class="btn btn-outline-dark" th:href="'/films/' + ${film.id} + '/addFilmCreator'" role="button">Добавить создателя</a>
+        </div>
+
+        <div class="mt-3 row g-2">
+            <h5 class="mb-0">Постер</h5>
+            <input name="file" class="form-control" type="file" accept="image/*">
+        </div>
+        <div class="mt-3 row g-2">
+            <h5 class="mb-0">Описание</h5>
+            <textarea name="description" th:text="${film.description}" type="text" class="form-control" id="description" rows="4" required></textarea>
+        </div>
+
+        <div class="mt-3 row g-2">
+            <button type="submit" class="btn btn-primary">Обновить</button>
+            <button type="button" class="btn btn-secondary" onclick="window.history.back()">Назад</button>
+        </div>
+    </form>
+</div>
 </body>
 
 </html>
