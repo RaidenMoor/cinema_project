@@ -2,6 +2,7 @@ package com.example.cinema.repository;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -30,4 +31,10 @@ public interface SeatRepository extends GenericRepository<Seat> {
                 right join seats s on s.id = os.seat_id
         """)
     List<SeatsMapDTO> getSeatsMap(@Param("filmSessionId") Long filmSessionId);
+
+    @Modifying
+    @Query("UPDATE Seat s SET s.price = :price WHERE s.hall.id = :hallId AND s.isDeleted = false")
+    void updatePricesByHallId(@Param("hallId") Long hallId, @Param("price") Double price);
+
+
 }

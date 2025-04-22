@@ -5,9 +5,163 @@
 <head>
     <meta charset="UTF-8">
     <title>Конструктор</title>
+    <style>
+        body {
+          background-color: #E2E5FF;
+          margin: 0;
+          padding: 20px;
+          font-family: Arial, sans-serif;
+        }
+
+        .container {
+          display: flex;
+          gap: 20px;
+          max-width: 100%;
+          max-height: 100%;
+          margin: 0 auto;
+          margin-top: 70px;
+            background-color: #E2E5FF;
+        }
+
+        .hall-info {
+          width: 625px;
+          height: 340px;
+          background-color: white;
+          border-radius: 30px;
+          padding: 25px;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .edit-btn {
+
+          background-color: #C78EFF;
+          color: white;
+          border: none;
+          text-decoration:none;
+          border-radius: 10px;
+          padding:10px;
+          font-weight: bold;
+        text-align: center;
+        height:54px;
+        width:367px;
+          font-size: 18px;
+          font-weight: bold;
+          margin-top: 20px;
+          cursor: pointer;
+          transition: background-color 0.3s;
+        }
+
+        .edit-btn:hover {
+          background-color: #B57EE6;
+        }
+
+        .hall-scheme {
+          width: 710px;
+          height: 860px;
+          background-color: white;
+          border-radius: 30px;
+          padding: 25px;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .scheme-title {
+          font-size: 28px;
+          font-weight: bold;
+          margin-bottom: 20px;
+          text-align: center;
+        }
+
+        .hall-details {
+          margin-top: 20px;
+        }
+
+        .detail-row {
+          display: flex;
+          margin-bottom: 15px;
+        }
+
+        .detail-label {
+          font-weight: bold;
+          width: 200px;
+        }
+
+        .detail-value {
+          flex: 1;
+        }
+
+        .screen {
+          width: 80%;
+          height: 20px;
+          background-color: #323844;
+          margin: 0 auto 30px;
+          border-radius: 5px;
+        }
+
+        .seats-grid {
+          display: inline-block;
+
+          justify-content: center;
+        }
+
+        .seat {
+          width: 30px;
+          height: 30px;
+          background-color: #ffff;
+          border-radius:10px;
+            border:2px solid #616161;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: white;
+          font-size: 10px;
+          margin: 5px;
+        }
+    </style>
 </head>
 <body>
 <div layout:fragment="content">
-</div>div>
+    <div class="container">
+        <!-- Левая часть - информация о зале -->
+        <div>
+            <div class="hall-info">
+                <h2>Информация о зале</h2>
+                <div class="hall-details">
+                    <div class="detail-row">
+                        <span class="detail-label">Номер зала:</span>
+                        <span class="detail-value" th:text="${hall.id}"></span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Тип зала:</span>
+                        <span class="detail-value" th:text="${hall.hallType.getDisplayName()}"></span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Количество рядов:</span>
+                        <span class="detail-value" th:text="${hall.countRow}"></span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Мест в ряду:</span>
+                        <span class="detail-value" th:text="${hall.countPlace}"></span>
+                    </div>
+
+                </div>
+            </div>
+            <a th:href="@{/halls/update/{id}(id=${hall.id})}" type="submit" class="edit-btn">Редактировать зал</a>
+        </div>
+
+        <!-- Правая часть - схема зала -->
+        <div class="hall-scheme">
+            <div class="scheme-title">Схема зала</div>
+            <div class="screen"></div>
+            <div class="seats-grid"
+                 >
+                <div th:each="row : ${#numbers.sequence(1, hall.countRow)}">
+                    <div th:each="seat : ${#numbers.sequence(1, hall.countPlace)}"
+                         class="seat"
+                         th:text="${row} + '-' + ${seat}"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

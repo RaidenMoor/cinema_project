@@ -14,6 +14,7 @@
             justify-content: center;
             min-height: 100vh;
             padding: 20px;
+              background-color: #E2E5FF;
         }
         .form-container {
             width: 100%;
@@ -41,8 +42,8 @@
 </head>
 
 <body>
-<div layout:fragment="content" style="background-color: #E2E5FF">
-    <div class="centered-form">
+<div layout:fragment="content" >
+    <div class="centered-form" >
         <div class="form-container">
             <h3 class="form-title">Добавить фильм</h3>
             <form enctype="multipart/form-data" class="needs-validation" method="POST" th:action="@{/films/add}" th:object="${filmForm}">

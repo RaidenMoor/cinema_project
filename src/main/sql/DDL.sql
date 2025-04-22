@@ -109,6 +109,7 @@ create table seats
     is_deleted   boolean,
     updated_by   varchar(255),
     updated_when timestamp(6),
+    price        double precision,
     place        smallint     not null,
     row          smallint     not null,
     hall_id      bigint       not null,

@@ -27,4 +27,8 @@ public class Seat extends GenericModel{
     @ManyToOne
     @JoinColumn(name = "hall_id", nullable = false)
     private Hall hall;
+
+    @Column(name = "price", nullable = false)
+    private double price;
+
 }

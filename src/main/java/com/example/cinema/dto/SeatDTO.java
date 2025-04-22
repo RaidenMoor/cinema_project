@@ -22,4 +22,7 @@ public class SeatDTO extends GenericDTO {
     @Schema(description = "Зал")
     private Long hall_id;
 
+    @Schema(description = "Цена")
+    private double price;
+
 }

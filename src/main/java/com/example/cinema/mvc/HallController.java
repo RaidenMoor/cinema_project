@@ -48,10 +48,6 @@ public class HallController  {
         return "halls/allHalls";
     }
 
-    @GetMapping("/constructor")
-    public String constructorHall(Model model){
-        return "halls/hallConstructor";
-    }
 
     @GetMapping("/constructor/{id}")
     public String constructorHall(@PathVariable("id") Long id, Model model) {

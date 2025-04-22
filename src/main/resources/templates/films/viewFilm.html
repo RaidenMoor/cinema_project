@@ -28,7 +28,7 @@
                     <p class="card-text"><span class="text-muted" style="font-weight: bold; color: #747474">Год выхода: </span><span style="color:black" th:text="${film.releaseYear}"></span></p>
                     <p class="card-text mb-4"><span class="text-muted" style="font-weight: bold; color: #747474">Страна производства: </span><span style="color:black" th:text="${film.country.text}"></span></p>
                     <p class="card-text" th:each="filmCreator : ${film.filmCreators}">
-                        <span  th:text="'Режиссер: ' + ${filmCreator.fullName}"></span>
+                        <span  th:text="'Режиссеры: ' + ${filmCreator.fullName}"></span>
                     </p>
                     <p class="card-text mt-5" style="font-weight: bold; color: #black" th:text="${film.description}"></p>
                 </div>
