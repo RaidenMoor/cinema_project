@@ -28,6 +28,8 @@
           height: 340px;
           background-color: white;
           border-radius: 30px;
+          font-weight: bold;
+          font-size: 20px;
           padding: 25px;
           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
@@ -55,67 +57,133 @@
           background-color: #B57EE6;
         }
 
-        .hall-scheme {
-          width: 710px;
-          height: 860px;
-          background-color: white;
-          border-radius: 30px;
+         .hall-container {
+            width: 709px;
+            height: 856px;
+            position: relative;
+        background-color: #ffff;
+ border-radius: 30px;
           padding: 25px;
           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
-        .scheme-title {
-          font-size: 28px;
-          font-weight: bold;
-          margin-bottom: 20px;
-          text-align: center;
+        .hall-scheme {
+
+
+            width: 613px;
+            height: 420px;
+            background-color: #ffff;
+            border-radius: 15px;
+            border: 1px solid #ccc;
+            padding: 25px;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+         .hall-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
         }
 
-        .hall-details {
-          margin-top: 20px;
+        .row-number {
+            width: 77px;
+            text-align: center;
+             color: #616161;
+             font-size:20px;
+            font-weight: bold;
+            margin-right: 10px;
         }
 
-        .detail-row {
-          display: flex;
-          margin-bottom: 15px;
+        .seats-container {
+            display: flex;
+            flex-grow: 1;
         }
 
-        .detail-label {
-          font-weight: bold;
-          width: 200px;
-        }
+        .hall-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, 30px);
+            grid-auto-rows: 30px;
+            gap: 20px;
+            justify-content: center;
+            align-content: center;
 
-        .detail-value {
-          flex: 1;
-        }
-
-        .screen {
-          width: 80%;
-          height: 20px;
-          background-color: #323844;
-          margin: 0 auto 30px;
-          border-radius: 5px;
-        }
-
-        .seats-grid {
-          display: inline-block;
-
-          justify-content: center;
         }
 
         .seat {
-          width: 30px;
-          height: 30px;
-          background-color: #ffff;
-          border-radius:10px;
-            border:2px solid #616161;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          color: white;
-          font-size: 10px;
-          margin: 5px;
+            width: 34px;
+            height: 34px;
+            background-color: white;
+            color: #616161;
+            border: 1px solid #616161;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            cursor: pointer;
+            margin-top: 20px;
+            margin-right: 20px;
         }
+
+         .row-actions {
+            display: flex;
+            gap: 5px;
+            flex-direction:row;
+            position: absolute
+             right: 5px;
+        }
+
+        .action-btn {
+            width: 34px;
+            height: 34px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #C78EFF;
+            color: #ffff;
+            font-size: 16px;
+        }
+
+        .action-btn:hover {
+            background-color: #D7AEFF;
+        }
+
+        .delete-btn {
+            background-color: #FF3232;
+            margin-top: 20px;
+        }
+
+        .delete-btn:hover {
+            background-color: #FF7676;
+        }
+
+        . action-btn edit-btn {
+            background-color: #7F7F7F;
+        }
+
+        .action-btn edit-btn:hover {
+            background-color: #B0B0B0;
+        }
+
+        .add-row-btn {
+
+            padding: 10px;
+            margin-top: 15px;
+            margin-left: 50px;
+            background-color: #C78EFF;
+            justify-content:center;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .add-row-btn:hover {
+            background-color: #D7AEFF;
+        }
+
+
     </style>
 </head>
 <body>
@@ -124,23 +192,24 @@
         <!-- Левая часть - информация о зале -->
         <div>
             <div class="hall-info">
-                <h2>Информация о зале</h2>
+                <h2 style=" font-weight: bold;">Информация о зале</h2>
                 <div class="hall-details">
                     <div class="detail-row">
-                        <span class="detail-label">Номер зала:</span>
-                        <span class="detail-value" th:text="${hall.id}"></span>
+                        <span class="detail-label" style="color:#7F7F7F">Номер зала:</span>
+                        <span class="detail-value" th:text="${hall.id}" style="color:#323844"></span>
                     </div>
                     <div class="detail-row">
-                        <span class="detail-label">Тип зала:</span>
-                        <span class="detail-value" th:text="${hall.hallType.getDisplayName()}"></span>
+                        <span class="detail-label" style="color:#7F7F7F">Тип зала:</span>
+                        <span class="detail-value" th:text="${hall.hallType.getDisplayName()}"
+                              style="color:#323844"></span>
                     </div>
                     <div class="detail-row">
-                        <span class="detail-label">Количество рядов:</span>
-                        <span class="detail-value" th:text="${hall.countRow}"></span>
+                        <span class="detail-label" style="color:#7F7F7F">Количество рядов:</span>
+                        <span class="detail-value" th:text="${hall.countRow}" style="color:#323844"></span>
                     </div>
                     <div class="detail-row">
-                        <span class="detail-label">Мест в ряду:</span>
-                        <span class="detail-value" th:text="${hall.countPlace}"></span>
+                        <span class="detail-label" style="color:#7F7F7F">Мест в ряду:</span>
+                        <span class="detail-value" th:text="${hall.countPlace}" style="color:#323844"></span>
                     </div>
 
                 </div>
@@ -149,19 +218,41 @@
         </div>
 
         <!-- Правая часть - схема зала -->
-        <div class="hall-scheme">
-            <div class="scheme-title">Схема зала</div>
-            <div class="screen"></div>
-            <div class="seats-grid"
-                 >
-                <div th:each="row : ${#numbers.sequence(1, hall.countRow)}">
-                    <div th:each="seat : ${#numbers.sequence(1, hall.countPlace)}"
-                         class="seat"
-                         th:text="${row} + '-' + ${seat}"></div>
+        <div class="hall-container">
+            <h1 >Схема зала</h1>
+            <div class="hall-scheme">
+
+
+                <!-- Ряды с местами -->
+                <div th:each="row : ${#numbers.sequence(1, hall.countRow)}" class="hall-row">
+                    <!-- Номер ряда -->
+                    <div class="row-number" th:text="'Ряд №' + ${row}"></div>
+
+                    <!-- Места в ряду -->
+                    <div class="seats-container">
+                        <div th:each="place : ${#numbers.sequence(1, hall.countPlace)}"
+                             class="seat"
+                             th:title="'Ряд ' + ${row} + ', Место ' + ${place}"
+                             th:text="${place}">
+                        </div>
+                        <div class="row-actions">
+                            <button type="button" class="action-btn edit-btn" style = "background-color: #7F7F7F;"title="Редактировать ряд"><i class="bi bi-pencil"></i></button>
+                            <button type="button" class="action-btn delete-btn" title="Удалить ряд"><i class="bi bi-trash3"></i>️</button>
+                        </div>
+                    </div>
+                    <!-- Кнопки управления рядом -->
+
+
                 </div>
+                <!-- Кнопка добавления ряда -->
+                <button class="action-btn add-row-btn">+</button>
             </div>
-        </div>
+
+            </div>
+
+
     </div>
+</div>
 </div>
 </body>
 </html>

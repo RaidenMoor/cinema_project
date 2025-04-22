@@ -66,7 +66,7 @@
 
     .btn-save {
       background-color: #C78EFF;
-      color: #000000;
+      color: #ffff;
       border: none;
       border-radius: 10px;
       padding: 10px 25px;
@@ -159,17 +159,6 @@
         </div>
       </div>
 
-
-      <div class="hall-preview">
-        <h5 style="color: #000000;">Предпросмотр зала</h5>
-        <div class="screen"></div>
-        <div class="hall-scheme">
-          <div th:each="row : ${#numbers.sequence(1, hall.countRow)}">
-            <div th:each="seat : ${#numbers.sequence(1, hall.countPlace)}" class="seat"></div>
-            <br>
-          </div>
-        </div>
-      </div>
 
       <div class="btn-group">
         <button type="button" class="btn-cancel" onclick="window.history.back()">Назад</button>

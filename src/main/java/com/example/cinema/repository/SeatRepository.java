@@ -36,5 +36,13 @@ public interface SeatRepository extends GenericRepository<Seat> {
     @Query("UPDATE Seat s SET s.price = :price WHERE s.hall.id = :hallId AND s.isDeleted = false")
     void updatePricesByHallId(@Param("hallId") Long hallId, @Param("price") Double price);
 
+    // Удаление всех мест в указанном ряду зала
+    @Modifying
+    @Query("DELETE FROM Seat s WHERE s.hall.id = :hallId AND s.row = :row")
+    void deleteByHallIdAndRow(@Param("hallId") Long hallId, @Param("row") Byte row);
+
+    // Получение количества мест в указанном ряду
+    int countByHallIdAndRow(Long hallId, Byte row);
+
 
 }
