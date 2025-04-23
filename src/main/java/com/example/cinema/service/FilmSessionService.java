@@ -56,8 +56,7 @@ public class FilmSessionService extends GenericService<FilmSession, FilmSessionD
         session = repository.save(session);
 
 
-        // Обновляем цены мест в зале
-        updateSeatPrices(hall.getId(), filmSessionDTO.getPrice());
+
 
         return mapper.toDTO(repository.save(session));
     }

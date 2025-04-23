@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ru"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактировать ряд</title>
+    <style>
+        body {
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+
+        }
+
+        .edit-container {
+            background-color: #E2E5FF;
+            padding: 20px;
+            border-radius: 10px;
+            width: 833px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        h2 {
+            margin-top: 0;
+            color: #323844;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        select {
+            width: 100%;
+            padding: 8px;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .save-btn {
+            background-color: #C78EFF;
+      color: #ffff;
+      border: none;
+      border-radius: 10px;
+      padding: 10px 25px;
+        }
+
+        .cancel-btn {
+             background-color: #323844;
+              color: #ffffff;
+              border: none;
+              border-radius: 10px;
+              padding: 10px 25px;
+        }
+    </style>
+</head>
+<body>
+    <div layout:fragment="content">
+        <div class="edit-container">
+            <h2>Редактировать коэффициент ряда № <span th:text="${rowNumber}"></span></h2>
+
+            <form th:action="@{/halls/constructor/{hallId}/rows/{rowNumber}/update(hallId=${hallId}, rowNumber=${rowNumber})}" method="post">
+                <div class="form-group">
+                    <label for="coefficient">Коэффициент:</label>
+                    <select id="coefficient" name="coefficient" required>
+                        <option th:each="coeff : ${T(com.example.cinema.model.enums.Coeffintient).values()}"
+                                th:value="${coeff.text}"
+                                th:text="${coeff.name() + ' (' + coeff.text + ')'}">
+                        </option>
+                    </select>
+                </div>
+
+                <div class="buttons">
+                    <a th:href="@{/halls/constructor/{hallId}(hallId=${hallId})}" class="cancel-btn">Назад</a>
+                    <button type="submit" class="save-btn">Сохранить</button>
+                </div>
+
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+            </form>
+        </div>
+    </div>
+</body>
+</html>

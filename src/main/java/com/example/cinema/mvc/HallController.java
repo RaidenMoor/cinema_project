@@ -7,6 +7,7 @@ import com.example.cinema.model.Hall;
 import com.example.cinema.model.enums.HallType;
 import com.example.cinema.service.HallService;
 import com.example.cinema.utils.KinopoiskApi;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -66,7 +68,7 @@ public class HallController  {
     @PostMapping("/update")
     public String update(@ModelAttribute("hall") HallDTO hallDTO) {
         hallService.update(hallDTO);
-        return "redirect:/halls";
+        return "redirect:/halls/constructor/" + hallDTO.getId();
     }
 
     @GetMapping("/add")
@@ -90,6 +92,71 @@ public class HallController  {
         hallService.create(hallDto);
         return "redirect:/halls";
     }
+    @Transactional
+    @PostMapping("/constructor/{hallId}/rows/delete")
+    public String deleteRow(
+            @PathVariable Long hallId,
+            @RequestParam Byte rowNumber,
+            RedirectAttributes redirectAttributes) {
+
+        try {
+            // 1. Удаление мест
+            hallService.deleteRow(hallId, rowNumber);
+
+            redirectAttributes.addFlashAttribute("success",
+                    "Удалено: ряд " + rowNumber );
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error",
+                    "Ошибка при удалении: " + e.getMessage());
+        }
+
+        return "redirect:/halls/constructor/" + hallId;
+    }
+    @PostMapping("/constructor/{hallId}/rows/add")
+    public String addRow(
+            @PathVariable Long hallId,
+            RedirectAttributes redirectAttributes) {
 
 
+
+        try {
+          hallService.addRow(hallId);
+
+            redirectAttributes.addFlashAttribute("successMessage", "Новый ряд успешно добавлен");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Ошибка при добавлении ряда");
+        }
+
+        return "redirect:/halls/constructor/" + hallId;
+    }
+
+    @GetMapping("/constructor/{hallId}/rows/{rowNumber}/edit")
+    public String showEditRowForm(@PathVariable Long hallId,
+                                  @PathVariable Byte rowNumber,
+                                  Model model) {
+
+
+        model.addAttribute("hallId", hallId);
+        model.addAttribute("rowNumber", rowNumber);
+        return "halls/editRow";
+    }
+
+    @PostMapping("/constructor/{hallId}/rows/{rowNumber}/update")
+    public String updateRowCoefficient(
+            @PathVariable Long hallId,
+            @PathVariable Byte rowNumber,
+            @RequestParam double coefficient,
+            RedirectAttributes redirectAttributes) {
+
+        try {
+           hallService.editRow(hallId, rowNumber,coefficient);
+            redirectAttributes.addFlashAttribute("success",
+                    "Коэффициент для ряда " + rowNumber + " успешно обновлен");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error",
+                    "Ошибка при обновлении: " + e.getMessage());
+        }
+
+        return "redirect:/halls/constructor/" + hallId;
+    }
 }

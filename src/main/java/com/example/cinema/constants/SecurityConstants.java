@@ -102,7 +102,11 @@ public interface SecurityConstants {
           "/halls/add",
           "/halls/constructor/{id}",
           "/halls/update/{id}",
-          "/halls/update"
+          "/halls/update",
+          "/halls/constructor/{hallId}/rows/delete",
+          "/halls/constructor/{hallId}/rows/add",
+          "/halls/constructor/{hallId}/rows/{rowNumber}/edit",
+          "/halls/constructor/{hallId}/rows/{rowNumber}/update"
   );
 
 

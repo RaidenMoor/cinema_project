@@ -14,6 +14,14 @@ import java.util.List;
 @Repository
 public interface SeatRepository extends GenericRepository<Seat> {
 
+    List<Seat> findByHallIdAndRow(Long hallId, Byte row);
+    @Modifying
+    @Query("UPDATE Seat s SET s.row = s.row - 1 WHERE s.hall.id = :hallId AND s.row > :deletedRow")
+    void shiftRowsDown(@Param("hallId") Long hallId, @Param("deletedRow") Byte deletedRow);
+
+    List<Seat> findByHallIdAndRowAndIsDeletedFalse(Long hallId, Byte row);
+    List<Seat> findByHallId(Long hallId);
+
     @Query(nativeQuery = true,
         value = """
             select *
