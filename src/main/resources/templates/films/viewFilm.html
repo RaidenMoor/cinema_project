@@ -62,14 +62,21 @@
                 (isAuthenticated() && hasRole(T(com.example.cinema.constants.UserRolesConstants).USER))">
                 <a class="text-link text-blue"
                    th:href="@{/seats/selectSeat(filmSessionId=${filmSession.id})}"
-                   th:text="${filmSession.startTime}"></a>
+                   th:text="${filmSession.startTime}"
+                style="color:black"></a>
             </td>
             <td sec:authorize="isAuthenticated() && (hasRole('ADMIN') || hasRole('MANAGER'))"
                 th:text="${filmSession.startTime}"></td>
             <td th:text="${filmSession.price}"></td>
             <td th:text = "${filmSession.hallId}"></td>
+            <td sec:authorize="  (isAuthenticated() && hasRole(T(com.example.cinema.constants.UserRolesConstants).USER))">
+                <a class="btn btn-sm btn-outline-success"  th:href="@{/seats/selectSeat(filmSessionId=${filmSession.id})}"
+                   style="float: right; margin-left: 20px; outline:none;background-color: #C78EFF; color: #ffff; border-radius: 10px;">
+                    Купить билет</a>
+            </td>
             <td sec:authorize="isAuthenticated() && (hasRole('ADMIN') || hasRole('MANAGER'))">
-                <a class="btn btn-sm btn-outline-success" th:href="'/filmSessions/update/' + ${filmSession.getId()}" style="float: right; margin-left: 20px; outline:none;background-color: #323844; color: #ffff; border-radius: 10px;">Редактировать</a>
+                <a class="btn btn-sm btn-outline-success" th:href="'/filmSessions/update/' + ${filmSession.getId()}"
+                   style="float: right; margin-left: 20px; outline:none;background-color: #323844; color: #ffff; border-radius: 10px;">Редактировать</a>
                 <a th:if="${!filmSession.isDeleted()}" class="btn btn-sm btn-outline-danger" th:href="'/filmSessions/delete/' + ${filmSession.getId()}"
                    onclick="return confirm('Вы действительно хотите удалить сеанс?');" style="float: right">Удалить</a>
                 <a th:if="${filmSession.isDeleted()}" class="btn btn-sm btn-outline-warning" th:href="'/filmSessions/restore/' + ${filmSession.getId()}" style="float: right">Восстановить</a>

@@ -50,6 +50,19 @@
           <label for="price">Цена</label>
         </div>
       </div>
+      <div class="mt-3">
+        <div class="form-floating">
+          <select class="form-select" id="hallId" name="hallId" required>
+            <option value="">Выберите зал</option>
+            <option th:each="hall : ${halls}"
+                    th:value="${hall.id}"
+                    th:text="${hall.id} + ' (' + ${hall.hallType} + ')'"
+                    th:selected="${hall.id == filmSession.hallId}">
+            </option>
+          </select>
+          <label for="hallId">Зал</label>
+        </div>
+      </div>
     </div>
     <div class="mt-3 row g-2">
       <button type="submit" class="btn btn-primary">Обновить</button>

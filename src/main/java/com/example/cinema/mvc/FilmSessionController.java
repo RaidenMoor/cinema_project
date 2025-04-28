@@ -1,5 +1,8 @@
 package com.example.cinema.mvc;
 
+import com.example.cinema.dto.HallDTO;
+import com.example.cinema.model.Hall;
+import com.example.cinema.service.HallService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,12 +12,15 @@ import com.example.cinema.dto.FilmSessionDTO;
 import com.example.cinema.service.FilmService;
 import com.example.cinema.service.FilmSessionService;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/filmSessions")
 public class FilmSessionController {
 
     private FilmSessionService filmSessionService;
     private FilmService filmService;
+    private HallService hallService;
 
 
 
@@ -42,7 +48,11 @@ public class FilmSessionController {
     public String update(Model model, @PathVariable Long id) {
         FilmSessionDTO filmSessionDTO = filmSessionService.getById(id);
 
+        List<HallDTO> halls = hallService.getAll();
+
         model.addAttribute("filmSession", filmSessionDTO);
+        model.addAttribute("filmSessionForm", filmSessionDTO);
+        model.addAttribute("halls", halls);;
         model.addAttribute("filmTitle", filmService.getById(filmSessionDTO.getFilmId()).getTitle());
         return "filmSessions/updateFilmSession";
     }
@@ -59,6 +69,11 @@ public class FilmSessionController {
     public void setFilmSessionService(FilmSessionService filmSessionService) {
         this.filmSessionService = filmSessionService;
     }
+    @Autowired
+    public void setHallService(HallService hallService) {
+        this.hallService = hallService;
+    }
+
 
     @Autowired
     public void setFilmService(FilmService filmService) {

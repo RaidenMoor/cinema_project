@@ -15,6 +15,9 @@ public interface SecurityConstants {
       "/users/remember-password",
       "/users/change-password",
       "/error",
+      "/about",
+      "/about/authors",
+      "/about/system",
       "/favicon.ico",
       // -- Swagger UI v3 (OpenAPI)
       "/swagger-ui/**",
