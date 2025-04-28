@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ru"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>О разработчиках</title>
+  <style>
+    .container{
+    width:1043px;
+    height:650px;
+    margin-top:70px;
+    }
+    .h2{
+    font-weight: bold;
+    font-size: 48px;
+    }
+    .info-container{
+    width:1043px;
+    height:580px;
+    border-radius:15px;
+    padding:20px;
+    background-color: #C78EFF;
+    color:white;
+    text-align: left;
+    }
+     .info-container p{
+
+    color:white;
+    font-size: 24px;
+    }
+
+  </style>
+</head>
+<body>
+<div layout:fragment="content">
+  <div class = "container">
+  <h2>Об авторах</h2>
+    <div class="info-container">
+      <p style="font-weight: bold;">Самарский национальный исследовательский университет им. С.П. Королева</p>
+      <p>Кафедра программных систем</p>
+      <p style="font-weight: bold;">Курсовая работа на тему </p>
+      <p>"Разработки веб-приложения для бронирования билетов в кинотеатре"</p>
+
+      <p style="font-weight: bold;">Разработчики: обучающиеся группы 6301-020302D</p>
+      <p>Гусева Мария</p>
+      <p>Кирясова Зоя</p>
+      <p>Вяльцев Алексей</p>
+      <p>Мельниченко Ирина</p>
+    </div>
+  </div>
+</div>
+</body>
+</html>

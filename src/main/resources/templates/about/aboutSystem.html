@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ru"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>О системе</title>
+  <style>
+    .container{
+  width:1043px;
+  height:650px;
+  margin-top:70px;
+  }
+  .h2{
+  font-weight: bold;
+  font-size: 48px;
+  }
+  .info-container{
+  width:1043px;
+  height:580px;
+  border-radius:15px;
+  background-color: #747474;
+  color:white;
+  padding: 20px;
+  text-align: left;
+  }
+   .info-container p{
+
+  color:white;
+  font-size: 24px;
+  }
+  </style>
+</head>
+<body>
+<div layout:fragment="content">
+  <div class = "container">
+    <h2>О системе</h2>
+    <div class="info-container">
+      <p>Система предназначена для бронирования и покупки билетов в кинотеатр.
+        </p>
+      <p>С помощью системы в роли "пользователь" пользователю доступны функции работы в личном кабинете, просмотра афиши,
+      бронирования билетов, просмотра истории бронирования.</p>
+     <p> С помощью системы в роли "администратор" доступны функции работы со справочниками, функции редактирования афиши,
+      функции конструирования залов.</p>
+
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -63,7 +63,7 @@
         <a class="navigation-link" th:href="'/users/profile/' + ${#authentication.getPrincipal().getUserId()}">Личный кабинет</a>
       </div> -->
       <div sec:authorize="isAuthenticated() && !hasRole('ADMIN')">
-        <a class="navigation-link" th:href="'/users/about' + ${#authentication.getPrincipal().getUserId()}">Справка</a>
+        <a class="navigation-link" href="/about">Справка</a>
       </div>
         <form class="d-flex" sec:authorize="!isAuthenticated()">
           <a href="/login" class="nav-btn" role="button" aria-disabled="true" style="text-decoration: none">Личный кабинет</a>

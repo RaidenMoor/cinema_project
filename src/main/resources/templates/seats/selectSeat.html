@@ -6,45 +6,145 @@
 <head>
     <meta charset="UTF-8">
     <title>Выбор мест</title>
+    <style>
+        .content-wrapper {
+           min-width: auto;
+           margin: 0 auto;
+           padding: 20px;
+       }
+       .text-info {
+           text-align: left;
+           margin-bottom: 20px;
+           color: #000000;
+       }
+       .seat-container {
+           display: flex;
+           background-color:white;
+            border: 1px solid #616161;
+            border-radius: 15px;
+           flex-direction: column;
+           align-items: center;
+           justify-content: center;
+           margin: 0 auto;
+           min-height: auto;
+           min-width: auto;
+           padding:20px;
+       }
+       .seat-row {
+           display: flex;
+           align-items: center;
+           margin-bottom: 10px;
+       }
+       .seat-label {
+           margin-right: 15px;
+           min-width: 70px;
+       }
+       .seat-options {
+           display: flex;
+           flex-wrap: wrap;
+           gap: 10px;
+       }
+       .seat-checkbox {
+           display: none;
+       }
+       .seat-checkbox + label {
+           display: inline-block;
+           width: 40px;
+           height: 40px;
+           line-height: 40px;
+           text-align: center;
+           border: 1px solid #ddd;
+           border-radius: 10px;
+           cursor: pointer;
+           background-color: white;
+           transition: all 0.3s;
 
+       }
+       .seat-checkbox:checked + label {
+           background-color: #C78EFF;
+           color: white;
+           border-color: #C78EFF;
+       }
+       .seat-checkbox:disabled + label {
+           background-color: gainsboro;
+           cursor: not-allowed;
+       }
+       .button-container {
+           display: flex;
+           flex-direction:column;
+           justify-content: center;
+           gap: 15px;
+           margin-top: 30px;
+       }
+       .btn-primary {
+           background-color: #C78EFF;
+           color: white;
+           border: none;
+           border-radius: 10px;
+           padding: 10px 25px;
+       }
+       .btn-secondary {
+           background-color: #323844;
+           color: white;
+           border: none;
+           border-radius: 10px;
+           padding: 10px 25px;
+       }
+    </style>
 </head>
 
 <body>
-<div layout:fragment="content">
-    <h3 class="mt-3 mb-4" th:text="'Выбор мест в кинозале'"></h3>
-    <h5 class="mb-3" th:text="'Название фильма: ' + ${filmTitle}"></h5>
-    <h5 class="mb-3" th:text="'Дата: ' + ${#temporals.format(filmSession.startDate, 'dd-MM-yyyy')}"></h5>
-    <h5 class="mb-4" th:text="'Начало сеанса: ' + ${filmSession.startTime}"></h5>
+<div layout:fragment="content" style="background-color: #E2E5FF">
+    <div class="content-wrapper">
+        <div class="text-info">
+            <h3 class="mt-3 mb-4" style="color:black" th:text="'Выбор мест в кинозале'"></h3>
+            <h5 class="mb-3" style="color:#616161" th:text="'Название фильма: ' + ${filmTitle}"></h5>
+            <h5 class="mb-3"  style="color:#616161" th:text="'Дата: ' + ${#temporals.format(filmSession.startDate, 'dd-MM-yyyy')}"></h5>
+            <h5 class="mb-4"  style="color:#616161" th:text="'Начало сеанса: ' + ${filmSession.startTime}"></h5>
+        </div>
 
-    <form class="needs-validation" style="max-width: 50vw" method="POST" th:object="${orderForm}"
-          th:action="@{/orders/preview}">
-        <input type="hidden" name="filmSessionId" th:value="${filmSession.id}">
+        <form class="needs-validation" method="POST" th:object="${orderForm}"
+              th:action="@{/orders/preview}">
+            <input type="hidden" name="filmSessionId" th:value="${filmSession.id}">
 
-        <div class="ms-2 mt-3" th:each="row : ${seatsInMap.keySet()}">
-            <div class="form-check form-check-inline" th:text="'Ряд №' + ${row} + ': '"></div>
-            <div class="form-check form-check-inline" th:each="place : ${seatsInMap.get(row).keySet()}">
-                <input th:if="${seatsInMap.get(row).get(place) gt 0}" class="form-check-input" type="checkbox" name="seatIds" id="free" th:value="${seatsInMap.get(row).get(place)}"  >
-                <label th:if="${seatsInMap.get(row).get(place) gt 0}" class="form-check-label" for="free" th:text="${place}" onchange="this.nextElementSibling.style.background = this.checked ? '#C78EFF' : 'white'"></label>
-                <input th:if="${seatsInMap.get(row).get(place) eq 0}" class="form-check-input" type="checkbox" name="seatIds" id="occupied" th:value="${seatsInMap.get(row).get(place)}" style="background: gainsboro" disabled>
-                <label th:if="${seatsInMap.get(row).get(place) eq 0}" class="form-check-label" for="occupied" th:text="${place}"></label>
+            <div class="seat-container">
+                <div th:each="row : ${seatsInMap.keySet()}">
+                    <div class="seat-row">
+                        <div class="seat-label" th:text="'Ряд №' + ${row}"></div>
+                        <div class="seat-options">
+                            <div th:each="place : ${seatsInMap.get(row).keySet()}">
+                                <input th:if="${seatsInMap.get(row).get(place) gt 0}"
+                                       class="seat-checkbox"
+                                       type="checkbox"
+                                       name="seatIds"
+                                       th:value="${seatsInMap.get(row).get(place)}"
+                                       th:id="'seat-' + ${row} + '-' + ${place}">
+                                <label th:if="${seatsInMap.get(row).get(place) gt 0}"
+                                       th:for="'seat-' + ${row} + '-' + ${place}"
+                                       th:text="${place}"></label>
+
+                                <input th:if="${seatsInMap.get(row).get(place) eq 0}"
+                                       class="seat-checkbox"
+                                       type="checkbox"
+                                       name="seatIds"
+                                       th:value="${seatsInMap.get(row).get(place)}"
+                                       th:id="'seat-' + ${row} + '-' + ${place}"
+                                       disabled>
+                                <label th:if="${seatsInMap.get(row).get(place) eq 0}"
+                                       th:for="'seat-' + ${row} + '-' + ${place}"
+                                       th:text="${place}"></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
 
-        <div class="mt-3 row g-2">
-            <button type="submit" class="btn btn-primary" style="background-color: #C78EFF;
-      color: #ffff;
-      border: none;
-      border-radius: 10px;
-      padding: 10px 25px;">Выбрать</button>
-            <button type="button" class="btn btn-secondary" onclick="window.history.back()" style=" background-color: #323844;
-      color: #ffffff;
-      border: none;
-      border-radius: 10px;
-      padding: 10px 25px;">Назад</button>
-        </div>
-    </form>
-
+            <div class="button-container">
+                <button type="submit" class="btn btn-primary">Выбрать</button>
+                <button type="button" class="btn btn-secondary" onclick="window.history.back()">Назад</button>
+            </div>
+        </form>
+    </div>
 </div>
 </body>
-
 </html>
