@@ -30,6 +30,6 @@ public class Seat extends GenericModel{
     private Hall hall;
 
     @Column(name = "price", nullable = false)
-    private double price;
+    private Double price;
 
 }

@@ -19,7 +19,7 @@ public class MainController {
 
 
 
-  @GetMapping
+  @GetMapping("/")
   public String index(Model model) {
     model.addAttribute("films", filmService.getAllAvailable());
     model.addAttribute("today", LocalDate.now());
@@ -28,7 +28,7 @@ public class MainController {
     return "index";
   }
 
-  @PostMapping
+  @PostMapping("/")
   public String index(@ModelAttribute("startDate") LocalDate filmSessionStartDate, Model model) {
     model.addAttribute("films", filmService.getAllByDate(filmSessionStartDate));
     model.addAttribute("today", LocalDate.now());

@@ -6,6 +6,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Мои заказы</title>
+    <style>
+        .btn-container{
+        display: flex;
+        flex-direction: row;
+        gap:10px;
+        }
+    </style>
 </head>
 
 <body>
@@ -30,10 +37,16 @@
                     <td th:text="${order.filmTitle}"></td>
                     <td th:text="${order.cost}"></td>
                     <td>
-                        <div>
-                            <a class="btn btn-sm btn-outline-info" th:href="'/orders/get/' + ${order.orderId}" style="float: right; background-color: #E2E5FF; border-radius: 10px">Подробнее</a>
-                            <a th:if="${!order.purchase}" class="btn btn-sm btn-outline-danger" th:href="'/orders/delete/' + ${order.orderId}"
-                               onclick="return confirm('Вы действительно хотите отменить бронирование?');" style="float: right; background-color:white; border-radius:10px; border:2px solid #ff0000; color:#ff0000">Отменить</a>
+                        <div class = "btn-container">
+                            <a class="btn btn-sm btn-outline-info" th:href="'/orders/get/' + ${order.orderId}" style="float: right; background-color: #C78EFF; color: white; border:none; border-radius: 10px">Подробнее</a>
+                            <th:block th:with="sessionDateTime=${T(java.time.LocalDateTime).of(order.startDate, order.startTime)}">
+                                <a th:if="${!order.purchase && sessionDateTime.isAfter(T(java.time.LocalDateTime).now())}"
+                                   class="btn btn-sm btn-outline-danger" th:href="'/orders/delete/' + ${order.orderId}"
+                                   onclick="return confirm('Вы действительно хотите отменить бронирование?');"
+                                   style="background-color:white; border-radius:10px; border:2px solid #FF0000; color:#FF0000">
+                                    Отменить
+                                </a>
+                            </th:block>
                         </div>
                     </td>
                 </tr>

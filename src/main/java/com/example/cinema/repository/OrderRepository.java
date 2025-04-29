@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @Repository
 public interface OrderRepository extends GenericRepository<Order>{
 
-    @Query("SELECT new com.example.cinema.dto.OrderInfoDTO(o.id, o.createdWhen, f.title, o.cost, o.purchase) "
+    @Query("SELECT new com.example.cinema.dto.OrderInfoDTO(o.id, o.createdWhen, f.title, fs.startDate, fs.startTime, o.cost, o.purchase) "
             + "FROM Film f JOIN f.filmSessions fs JOIN fs.orders o WHERE o.user.id = ?1 AND o.isDeleted = false ORDER BY o.createdWhen DESC")
     Page<OrderInfoDTO> getAllInfoByUserId(Long userId, PageRequest pageRequest);
 

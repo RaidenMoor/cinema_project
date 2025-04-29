@@ -5,7 +5,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Getter
 @Setter
@@ -18,6 +20,9 @@ public class OrderInfoDTO {
     protected LocalDateTime orderCreatedWhen;
 
     private String filmTitle;
+    private LocalDate startDate;
+    private LocalTime startTime;
+
 
     private double cost;
 

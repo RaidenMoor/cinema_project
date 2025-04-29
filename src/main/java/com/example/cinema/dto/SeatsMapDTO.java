@@ -6,5 +6,6 @@ public interface SeatsMapDTO {
     Byte getRow();
     Byte getPlace();
     Long getOrderId();
+    Double getPrice();
     boolean isDeleted();
 }

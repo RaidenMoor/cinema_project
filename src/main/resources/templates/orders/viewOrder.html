@@ -7,10 +7,95 @@
 <head>
     <meta charset="UTF-8">
     <title>Просмотр заказа</title>
+    <style>
+        .order-container{
+          background-color: #E2E5FF;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 0 auto;
+            max-width: 800px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+          .seats-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 15px 0;
+        }
+        .seat-item {
+            background: white;
+            padding: 8px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+        .form-centered {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .button-group {
+            display: flex;
+           flex-direction:column;
+           justify-content: center;
+           gap: 15px;
+           margin-top: 30px;
+        }
+
+    </style>
 </head>
 
 <body>
-
+<div layout:fragment="content">
+    <div class="order-container">
+    <h3 class="mt-3 mb-3" th:text="'Информация о заказе №' + ${order.id} + ' от ' + ${#temporals.format(order.createdWhen, 'dd.MM.yyyy HH:mm')}"></h3>
+    <div class="form-centered">
+        <div class="mb-4" style="max-width: 50vw">
+        <label for="filmTitle" class="form-label"><h6>Название фильма:</h6></label>
+        <input type="text" class="form-control" style="background-color:white;" id="filmTitle" th:value="${filmTitle}" disabled readonly>
+        </div>
+        <div class="mb-4" style="width: 100%">
+            <label class="form-label"><h6>Начало сеанса:</h6></label>
+            <div class="row g-2">
+                <div class="col-md-6">
+                    <h7 class="ms-2">Дата:</h7>
+                    <input type="date" class="form-control" style="background-color:white;" id="sessionStartDate" th:value="${filmSession.startDate}" disabled readonly>
+                </div>
+                <div class="col-md-6">
+                    <h7 class="ms-2">Время:</h7>
+                    <input type="time" class="form-control" style="background-color:white;" id="sessionStartTime" th:value="${filmSession.startTime}" disabled readonly>
+                </div>
+            </div>
+        </div>
+        <h6 class="mt-3 mb-2">Выбранные места:</h6>
+        <div class="seats-grid">
+            <div class="seat-item" th:each="seat : ${seats}">
+                <div class="row g-0">
+                    <div class="col-md-6 pe-2">
+                        <label for="row">Ряд:</label>
+                        <input type="number" style="background-color:white;" class="form-control" id="row" th:value="${seat.row}" disabled readonly>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="place">Место:</label>
+                        <input type="number" class="form-control" style="background-color:white;" id="place" th:value="${seat.place}" disabled readonly>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-4 align-items-center">
+            <div class="col-md-4">
+                <h6 class="mb-0">Стоимость:</h6>
+            </div>
+            <div class="col-md-4">
+                <label for="costPreview"></label>
+                <input type="number" class="form-control" style="background-color:white;"  id="costPreview" th:value="${order.cost}" disabled readonly>
+            </div>
+        </div>
+    </div>
+        <div class="button-group justify-content-center">
+            <button type="button" class="btn btn-secondary px-4" onclick="window.history.back()" style="background-color: #323844;">Назад</button>
+        </div>
+        </div>
+    </div>
 </body>
 
 </html>
