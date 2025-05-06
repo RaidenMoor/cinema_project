@@ -143,7 +143,7 @@
       <div class="form-row">
         <label class="form-label">Количество рядов:</label>
         <input type="number" class="form-control form-input"
-               th:field="*{countRow}" min="5" max="20" th:value="${hall.countRow}" required>
+               th:field="*{countRow}" min="3" max="10" th:value="${hall.countRow}" required>
         <div th:if="${#fields.hasErrors('countRow')}" class="text-danger">
           <span th:errors="*{countRow}"></span>
         </div>

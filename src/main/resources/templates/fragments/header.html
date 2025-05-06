@@ -35,7 +35,7 @@
           <a class="navigation-link"  th:href="'/orders/user/' + ${#authentication.getPrincipal().getUserId()}">Мои заказы</a>
         </div>-->
         <div sec:authorize="(isAuthenticated() && hasRole(T(com.example.cinema.constants.UserRolesConstants).USER))||!isAuthenticated()">
-          <form method="POST" th:action="@{/}" th:object="${startDate}">
+          <form method="GET" th:action="@{/}" th:object="${startDate}">
             <input name="startDate" type="hidden" th:value="${today}">
             <button type="submit" class="nav-btn">Сегодня</button>
           </form>

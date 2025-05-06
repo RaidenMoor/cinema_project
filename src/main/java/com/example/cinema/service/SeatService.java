@@ -22,17 +22,30 @@ public class SeatService extends GenericService<Seat, SeatDTO> {
 
 
 
-    public Map<Byte, Map<Byte, Long>> getAllInMap(Long filmSessionId) {
-        List<SeatsMapDTO> seats = ((SeatRepository) repository).getSeatsMap(filmSessionId);
+    public Map<Byte, Map<Byte, Long>> getAllInMap(Long filmSessionId, Long hallId) {
+        List<SeatsMapDTO> seats = ((SeatRepository) repository).getSeatsMap(filmSessionId, hallId);
+
         Map<Byte, Map<Byte, Long>> seatsInMap = new TreeMap<>();
         Map<Byte, Long> places;
         for (SeatsMapDTO seat : seats) {
+            boolean isOccupied = (seat.getOrderId() != null || seat.isDeleted());
+            System.out.println("Seat ID: " + seat.getSeatId() +
+                    ", Row: " + seat.getRow() +
+                    ", Place: " + seat.getPlace() +
+                    ", Order ID: " + seat.getOrderId() +
+                    ", Deleted: " + seat.isDeleted() +
+                    ", Occupied: " + isOccupied);
+            Long value;
+            if(isOccupied){
+                value = (long) 0;
+            }
+            else value = seat.getSeatId();
             places = seatsInMap.get(seat.getRow());
             if (places == null) {
                 places = new TreeMap<>();
-                places.put(seat.getPlace(), (seat.getOrderId() != null || seat.isDeleted()) ? 0 : seat.getSeatId());
+                places.put(seat.getPlace(), value);
                 seatsInMap.put(seat.getRow(), places);
-            } else places.put(seat.getPlace(), (seat.getOrderId() != null || seat.isDeleted()) ? 0 : seat.getSeatId());
+            } else places.put(seat.getPlace(), value);
         }
         return seatsInMap;
     }

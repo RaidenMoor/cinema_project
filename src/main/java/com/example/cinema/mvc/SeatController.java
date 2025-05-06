@@ -89,7 +89,7 @@ public class SeatController {
         FilmSessionDTO filmSessionDTO = filmSessionService.getById(filmSessionId);
         model.addAttribute("filmTitle", filmService.getById(filmSessionDTO.getFilmId()).getTitle());
         model.addAttribute("filmSession", filmSessionDTO);
-        model.addAttribute("seatsInMap", seatService.getAllInMap(filmSessionId));
+        model.addAttribute("seatsInMap", seatService.getAllInMap(filmSessionId, filmSessionDTO.getHallId()));
         return "seats/selectSeat";
     }
 

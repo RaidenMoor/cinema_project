@@ -265,9 +265,11 @@
 
                 </div>
                 <!-- Кнопка добавления ряда -->
+                <div th:if="${hall.countRow < 10}">
                 <form th:action="@{/halls/constructor/{hallId}/rows/add(hallId=${hall.id})}" method="post">
                     <button class="action-btn add-row-btn">+</button>
                 </form>
+                </div>
             </div>
 
             </div>

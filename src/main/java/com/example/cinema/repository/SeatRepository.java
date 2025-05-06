@@ -40,6 +40,16 @@ public interface SeatRepository extends GenericRepository<Seat> {
         """)
     List<SeatsMapDTO> getSeatsMap(@Param("filmSessionId") Long filmSessionId);
 
+    @Query(nativeQuery = true,
+            value = """
+            select s.id as seatId, s.row, s.place, o.id as orderId, s.is_deleted as deleted
+                from orders o
+                join orders_seats os on o.id = os.order_id and o.is_deleted = false and o.film_session_id = :filmSessionId
+                right join seats s on s.id = os.seat_id
+                WHERE s.hall_id = :hallId
+        """)
+    List<SeatsMapDTO> getSeatsMap(@Param("filmSessionId") Long filmSessionId, @Param("hallId") Long hallId);
+
     @Modifying
     @Query("UPDATE Seat s SET s.price = :price WHERE s.hall.id = :hallId AND s.isDeleted = false")
     void updatePricesByHallId(@Param("hallId") Long hallId, @Param("price") Double price);
