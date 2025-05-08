@@ -1,5 +1,6 @@
 package com.example.cinema.mvc;
 
+import com.example.cinema.config.DuplicateDataException;
 import com.example.cinema.dto.*;
 import com.example.cinema.model.Genres;
 import com.example.cinema.repository.CountryRepository;
@@ -7,9 +8,11 @@ import com.example.cinema.repository.FilmCreatorRepository;
 import com.example.cinema.repository.GenreRepository;
 import com.example.cinema.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,6 +20,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import com.example.cinema.utils.KinopoiskApi;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Controller
@@ -45,8 +50,13 @@ public class FilmController {
     public String viewFilm(@PathVariable Long id,  Model model) {
         FilmSessionDTO filmSessionForm = new FilmSessionDTO();
         filmSessionForm.setFilmId(id); // Устанавливаем ID фильма
+        LocalDate today = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String minDate = today.format(formatter);
+        model.addAttribute("minDate", minDate);
         model.addAttribute("filmSessionForm", filmSessionForm);
-
+        model.addAttribute("minTime", "09:45");
+        model.addAttribute("maxTime", "23:30");
         model.addAttribute("halls", hallService.getAll());
         model.addAttribute("film", filmService.getExtendedById(id));
         return "films/viewFilm";
@@ -60,12 +70,29 @@ public class FilmController {
     @PostMapping("/add")
     public String create(@ModelAttribute("filmForm") FilmDTO filmDTO, @RequestParam("file") MultipartFile file) {
         filmDTO.setRatingKp(filmService.getRating(filmDTO, KinopoiskApi.RatingType.KP));
-        if(file != null && file.getSize() > 0) {
-            filmService.create(filmDTO, file);
-        } else {
-            filmService.create(filmDTO);
-        }
-        return "redirect:/films";
+       try {
+           if (file != null && file.getSize() > 0) {
+               filmService.create(filmDTO, file);
+           } else {
+               filmService.create(filmDTO);
+           }
+           return "redirect:/films";
+       }
+       catch (DuplicateDataException e) {
+           //  Пример: Получить имя поля, вызвавшего дубликат (если оно есть)
+
+           String errorMessage = e.getMessage();
+
+           //  Можно сформировать более информативный ответ API
+           //  Map<String, String> error = new HashMap<>();
+           //  error.put("message", errorMessage);
+           //  if (duplicatedField != null) {
+           //      error.put("field", duplicatedField);
+           //  }
+           //  return new ResponseEntity<>(error, HttpStatus.CONFLICT);
+
+           return "errors/errorDub"; // Возвращаем сообщение об ошибке
+       }
     }
 
     @GetMapping("/delete/{id}")
@@ -89,16 +116,20 @@ public class FilmController {
 
     @PostMapping("/update")
     public String update(@ModelAttribute("filmForm") FilmDTO filmDTO, @RequestParam("file") MultipartFile file) {
-        Float ratingKp = filmService.getRating(filmDTO, KinopoiskApi.RatingType.KP);
-        if (ratingKp != null) {
-            filmDTO.setRatingKp(ratingKp);
+        try {
+            Float ratingKp = filmService.getRating(filmDTO, KinopoiskApi.RatingType.KP);
+            if (ratingKp != null) {
+                filmDTO.setRatingKp(ratingKp);
+            }
+            if (file != null && file.getSize() > 0) {
+                filmService.update(filmDTO, file);
+            } else {
+                filmService.update(filmDTO);
+            }
+            return "redirect:/films/get/" + filmDTO.getId();
+        } catch (DataIntegrityViolationException e) {
+            return "errors/errorDub";
         }
-        if(file != null && file.getSize() > 0) {
-            filmService.update(filmDTO, file);
-        } else {
-            filmService.update(filmDTO);
-        }
-        return "redirect:/films/get/" + filmDTO.getId();
     }
 
     @GetMapping("/{filmId}/addFilmCreator")

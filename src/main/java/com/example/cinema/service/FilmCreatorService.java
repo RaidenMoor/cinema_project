@@ -27,6 +27,8 @@ public class FilmCreatorService extends GenericService<FilmCreator, FilmCreatorD
         return mapper.toDTOs(filmCreators);
     }
 
+
+
     @Override
     public void softDelete(Long id) {
         FilmCreator filmCreator = repository.findById(id).orElse(null);

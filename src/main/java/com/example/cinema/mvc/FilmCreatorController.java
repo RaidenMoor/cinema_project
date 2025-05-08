@@ -1,5 +1,6 @@
 package com.example.cinema.mvc;
 
+import com.example.cinema.config.DuplicateDataException;
 import com.example.cinema.dto.CountryDTO;
 import com.example.cinema.dto.GenreDTO;
 import com.example.cinema.model.Country;
@@ -7,7 +8,9 @@ import com.example.cinema.model.Genres;
 import com.example.cinema.service.CountryService;
 import com.example.cinema.service.GenreService;
 import jakarta.validation.Valid;
+import org.postgresql.util.PSQLException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -43,7 +46,7 @@ public class FilmCreatorController {
     public String getAll(
             @RequestParam(name = "section", required = false) String section,
             @RequestParam(value = "page", defaultValue = "1") int page,
-            @RequestParam(value = "size", defaultValue = "5") int pageSize,
+            @RequestParam(value = "size", defaultValue = "80") int pageSize,
             Model model
     ) {
         List<?> data = null;
@@ -98,6 +101,7 @@ public class FilmCreatorController {
             // Обработка ошибок валидации
             return "filmCreators/referenceBooks"; // Вернуться на страницу со справочниками
         }
+        try{
         switch (section) {
             case "directors":
                 filmCreatorService.create(filmCreatorDTO);
@@ -109,7 +113,11 @@ public class FilmCreatorController {
                 genreService.create(genreDTO);
                 break;
         }
-        return "redirect:/filmCreators?section=" + section;
+        return "redirect:/filmCreators?section=" + section;}
+        catch (DataIntegrityViolationException e){
+            String errorMessage = e.getMessage();
+            return "errors/errorDub";
+        }
     }
 
 
@@ -162,11 +170,12 @@ public class FilmCreatorController {
             @ModelAttribute("genresForm") GenreDTO genreDTO,
             BindingResult result
     ) {
-        if (result.hasErrors()) {
-            return "filmCreators/update" + section.substring(0, 1).toUpperCase() + section.substring(1);
-        }
+        try {
+            if (result.hasErrors()) {
+                return "filmCreators/update" + section.substring(0, 1).toUpperCase() + section.substring(1);
+            }
 
-        switch(section) {
+        switch (section) {
             case "directors":
                 filmCreatorService.update(filmCreatorDTO);
                 return "redirect:/filmCreators?section=" + section;
@@ -179,6 +188,9 @@ public class FilmCreatorController {
         }
 
         return "redirect:/filmCreators?section=" + section;
+        }   catch (DataIntegrityViolationException e) {
+        return "errors/errorDub";
+        }
     }
 
 

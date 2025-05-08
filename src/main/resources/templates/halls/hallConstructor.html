@@ -252,13 +252,15 @@
                                     <i class="bi bi-pencil"></i>
                                 </button>
                             </form>
-                            <form th:action="@{/halls/constructor/{hallId}/rows/delete(hallId=${hall.id})}" method="post">
-                                <input type="hidden" name="rowNumber" th:value="${row}">
-                                <button type="submit" class="action-btn delete-btn"
-                                        onclick="return confirm('Удалить ряд ' + [[${row}]] + '?')">
-                                    <i class="bi bi-trash3"></i>
-                                </button>
-                            </form>
+                            <div th:if="${hall.countRow > 3}">
+                                <form th:action="@{/halls/constructor/{hallId}/rows/delete(hallId=${hall.id})}" method="post">
+                                    <input type="hidden" name="rowNumber" th:value="${row}">
+                                    <button type="submit" class="action-btn delete-btn"
+                                            onclick="return confirm('Удалить ряд ' + [[${row}]] + '?')">
+                                        <i class="bi bi-trash3"></i>
+                                    </button>
+                                </form>
+                            </div>
                         </div>
                     </div>
 

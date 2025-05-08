@@ -1,8 +1,10 @@
 package com.example.cinema.service;
 
+import com.example.cinema.config.DuplicateDataException;
 import com.example.cinema.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -54,14 +56,21 @@ public class FilmService extends GenericService<Film, FilmDTO> {
 
 
     public void create(FilmDTO filmDTO, MultipartFile file) {
-        Film film = mapper.toEntity(filmDTO);
-        film.setCreatedBy(SecurityContextHolder.getContext().getAuthentication().getName());
-        film.setCreatedWhen(LocalDateTime.now());
-        film = repository.save(film);
+        try {
+            Film film = mapper.toEntity(filmDTO);
+            film.setCreatedBy(SecurityContextHolder.getContext().getAuthentication().getName());
+            film.setCreatedWhen(LocalDateTime.now());
+            film = repository.save(film);
 
-        String posterFileName = fileHelper.createFile(file, null, film.getId());
-        film.setPosterFileName(posterFileName);
-        repository.save(film);
+            String posterFileName = fileHelper.createFile(file, null, film.getId());
+            film.setPosterFileName(posterFileName);
+            repository.save(film);
+        }
+     catch (
+    DataIntegrityViolationException e) {
+        // Обработка нарушения уникальности (например, email уже существует)
+        throw new DuplicateDataException("Такой фильм уже существует");
+    }
     }
 
     public void update(FilmDTO filmDTO, MultipartFile file) {

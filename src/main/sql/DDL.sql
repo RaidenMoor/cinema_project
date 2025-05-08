@@ -209,3 +209,8 @@ create table halls (
         count_place smallint not null,
         hall_type varchar(20) not null
 );
+CREATE UNIQUE INDEX idx_unique_film ON films(title, release_year);
+CREATE UNIQUE INDEX idx_genres ON genres(genre_name);
+CREATE UNIQUE INDEX idx_countries ON countries(country_name);
+CREATE UNIQUE INDEX idx_film_creators ON film_creators(full_name);
+CREATE UNIQUE INDEX idx_film_session ON film_sessions(start_date, start_time,hall_id);

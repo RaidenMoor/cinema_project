@@ -5,6 +5,7 @@ import com.example.cinema.model.Hall;
 import com.example.cinema.service.HallService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +13,8 @@ import com.example.cinema.dto.FilmSessionDTO;
 import com.example.cinema.service.FilmService;
 import com.example.cinema.service.FilmSessionService;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Controller
@@ -26,8 +29,14 @@ public class FilmSessionController {
 
     @PostMapping("/add")
     public String create(@ModelAttribute("filmSessionForm") FilmSessionDTO filmSessionDTO) {
-        filmSessionService.create(filmSessionDTO);
-        return "redirect:/films/get/" + filmSessionDTO.getFilmId();
+        try {
+            filmSessionService.create(filmSessionDTO);
+            return "redirect:/films/get/" + filmSessionDTO.getFilmId();
+        }
+        catch (DataIntegrityViolationException e) {
+            String errorMessage = e.getMessage();
+            return "errors/errorDub";
+        }
     }
 
     @GetMapping("/delete/{id}")
@@ -49,7 +58,12 @@ public class FilmSessionController {
         FilmSessionDTO filmSessionDTO = filmSessionService.getById(id);
 
         List<HallDTO> halls = hallService.getAll();
-
+        LocalDate today = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String minDate = today.format(formatter);
+        model.addAttribute("minDate", minDate);
+        model.addAttribute("minTime", "09:45");
+        model.addAttribute("maxTime", "23:30");
         model.addAttribute("filmSession", filmSessionDTO);
         model.addAttribute("filmSessionForm", filmSessionDTO);
         model.addAttribute("halls", halls);;
@@ -59,8 +73,12 @@ public class FilmSessionController {
 
     @PostMapping("/update")
     public String update(@ModelAttribute("filmSessionForm") FilmSessionDTO filmSessionDTO) {
-        filmSessionService.update(filmSessionDTO);
-        return "redirect:/films/get/" + filmSessionDTO.getFilmId();
+        try {
+            filmSessionService.update(filmSessionDTO);
+            return "redirect:/films/get/" + filmSessionDTO.getFilmId();
+        } catch (DataIntegrityViolationException e) {
+            return "errors/errorDub";
+        }
     }
 
 
