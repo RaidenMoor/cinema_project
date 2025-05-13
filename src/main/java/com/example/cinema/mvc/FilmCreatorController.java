@@ -46,7 +46,7 @@ public class FilmCreatorController {
     public String getAll(
             @RequestParam(name = "section", required = false) String section,
             @RequestParam(value = "page", defaultValue = "1") int page,
-            @RequestParam(value = "size", defaultValue = "80") int pageSize,
+            @RequestParam(value = "size", defaultValue = "5") int pageSize,
             Model model
     ) {
         List<?> data = null;
