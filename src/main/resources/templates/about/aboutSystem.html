@@ -6,46 +6,438 @@
 <head>
     <meta charset="UTF-8">
     <title>О системе</title>
-  <style>
-    .container{
-  width:1043px;
-  height:650px;
-  margin-top:70px;
-  }
-  .h2{
-  font-weight: bold;
-  font-size: 48px;
-  }
-  .info-container{
-  width:1043px;
-  height:580px;
-  border-radius:15px;
-  background-color: #747474;
-  color:white;
-  padding: 20px;
-  text-align: left;
-  }
-   .info-container p{
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --light-color: #f8fafc;
+            --dark-color: #1e293b;
+            --border-color: #e2e8f0;
+        }
 
-  color:white;
-  font-size: 24px;
-  }
-  </style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #334155;
+            background-color: #f8fafc;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 70px auto 0;
+            padding: 20px;
+        }
+
+        .help-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .help-header h1 {
+            font-size: 2rem;
+            color: var(--dark-color);
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .help-header p {
+            font-size: 1.1rem;
+            color: #64748b;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .help-wrapper {
+            display: flex;
+            gap: 30px;
+            align-items: flex-start;
+        }
+
+        .help-nav {
+            width: 280px;
+            position: sticky;
+            top: 20px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 20px;
+        }
+
+        .nav-group {
+            margin-bottom: 20px;
+        }
+
+        .nav-group-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--dark-color);
+            padding: 8px 0;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 10px;
+        }
+
+        .nav-link {
+            display: block;
+            padding: 8px 12px;
+            color: #475569;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all 0.2s;
+            font-size: 0.95rem;
+            margin-bottom: 4px;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background-color: #eff6ff;
+            color: var(--primary-color);
+        }
+
+        .nav-sublink {
+            display: block;
+            padding: 6px 12px 6px 24px;
+            color: #64748b;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all 0.2s;
+            font-size: 0.9rem;
+            margin-bottom: 2px;
+        }
+
+        .nav-sublink:hover {
+            background-color: #f1f5f9;
+            color: var(--primary-color);
+        }
+
+        .help-content {
+            flex: 1;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 30px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+            scroll-margin-top: 80px;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            color: var(--dark-color);
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .subsection {
+            margin-bottom: 30px;
+        }
+
+        .subsection-title {
+            font-size: 1.3rem;
+            color: var(--dark-color);
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
+        .content-text {
+            margin-bottom: 1.5rem;
+            color: #475569;
+            line-height: 1.7;
+        }
+
+        .image-box {
+            margin: 1.5rem 0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+            border: 1px solid var(--border-color);
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .image-box img {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
+        .image-description {
+            font-size: 0.9rem;
+            color: #64748b;
+            padding: 10px 15px;
+            background-color: #f8fafc;
+            border-top: 1px solid var(--border-color);
+        }
+
+        @media (max-width: 768px) {
+            .help-wrapper {
+                flex-direction: column;
+            }
+
+            .help-nav {
+                width: 100%;
+                position: static;
+                margin-bottom: 20px;
+            }
+
+            .image-box {
+                max-width: 100%;
+            }
+        }
+    </style>
 </head>
 <body>
 <div layout:fragment="content">
-  <div class = "container">
-    <h2>О системе</h2>
-    <div class="info-container">
-      <p>Система предназначена для бронирования и покупки билетов в кинотеатр.
-        </p>
-      <p>С помощью системы в роли "пользователь" пользователю доступны функции работы в личном кабинете, просмотра афиши,
-      бронирования билетов, просмотра истории бронирования.</p>
-     <p> С помощью системы в роли "администратор" доступны функции работы со справочниками, функции редактирования афиши,
-      функции конструирования залов.</p>
+    <div class="container">
+        <div class="help-header">
+            <h1>Справочная информация о системе</h1>
+            <p>Полное руководство по использованию системы онлайн-бронирования билетов в кинотеатре</p>
+        </div>
 
+        <div class="help-wrapper">
+            <nav class="help-nav">
+                <div class="nav-group">
+                    <div class="nav-group-title">Основные разделы</div>
+                    <a href="#intro" class="nav-sublink">Введение</a>
+                </div>
+
+                <div class="nav-group">
+                    <div class="nav-group-title">Режим пользователя</div>
+                    <a href="#start-page" class="nav-sublink">Стартовая страница</a>
+                    <a href="#user-auth" class="nav-sublink">Авторизация</a>
+                    <a href="#user-profile" class="nav-sublink">Личный кабинет</a>
+                    <a href="#user-booking" class="nav-sublink">Бронирование</a>
+                    <a href="#user-order-info" class="nav-sublink">Информация о заказе</a>
+                </div>
+
+                <div class="nav-group">
+                    <div class="nav-group-title">Режим администратора</div>
+                    <a href="#admin-halls" class="nav-sublink">Управление залами</a>
+                    <a href="#admin-movies" class="nav-sublink">Управление фильмами</a>
+                    <a href="#admin-sessions" class="nav-sublink">Управление сеансами</a>
+                    <a href="#admin-directors" class="nav-sublink">Справочник режиссеров</a>
+                    <a href="#admin-countries" class="nav-sublink">Справочник стран</a>
+                    <a href="#admin-genres" class="nav-sublink">Справочник жанров</a>
+                </div>
+            </nav>
+
+            <main class="help-content">
+                <section id="intro" class="section">
+                    <h2 class="section-title">1. Введение</h2>
+                    <p class="content-text">Система предназначена для автоматизации процесса онлайн-бронирования билетов в кинотеатре. Пользователи могут просматривать афишу фильмов, выбирать сеансы, бронировать места и управлять своими заказами. Администраторы имеют возможность управлять залами, фильмами, сеансами и справочниками.</p>
+                    <p class="content-text">Программа написана на языке Java17 в среде IntelliJ IDEA 2024.3.3 и функционирует под управлением операционной системы Windows 10 и выше. Доступ к данным осуществляется с помощью СУБД PostgreSQL 17.3.</p>
+                </section>
+
+                <section id="user-mode" class="section">
+                    <h2 class="section-title">2. Режим пользователя</h2>
+
+                    <div id="start-page" class="subsection">
+                        <h3 class="subsection-title">2.1 Стартовая страница</h3>
+                        <p class="content-text">Главная страница приложения с афишей кинотеатра, где отображается краткая информация о каждом фильме (жанр, год выхода, страна производства) и кнопкой «Подробнее» для перехода к деталям фильма и выбора сеанса.</p>
+                        <div class="image-box">
+                            <img src="/img/referenceMedia/image1.png" alt="Главная страница">
+                            <div class="image-description">Главная страница приложения</div>
+                        </div>
+                    </div>
+
+                    <div id="user-auth" class="subsection">
+                        <h3 class="subsection-title">2.2 Авторизация и регистрация</h3>
+                        <p class="content-text">Для работы с системой пользователю необходимо зарегистрироваться или авторизоваться, если аккаунт уже существует.</p>
+
+                        <p class="content-text">На странице регистрации пользователь может ввести логин, пароль, имя, фамилию и email, затем нажать кнопку «Зарегистрироваться» для создания аккаунта. Также пользователь может перейти к форме входа, если аккаунт уже существует.</p>
+                        <div class="image-box">
+                            <img src="/img/referenceMedia/image2.png" alt="Страница регистрации">
+                            <div class="image-description">Страница регистрации</div>
+                        </div>
+
+                        <p class="content-text">На странице входа пользователь может ввести логин и пароль, затем нажать кнопку «Войти» для авторизации. Также пользователь может перейти к форме регистрации, если аккаунта нет.</p>
+                        <div class="image-box">
+                            <img src="/img/referenceMedia/image3.png" alt="Страница входа">
+                            <div class="image-description">Страница входа в личный кабинет</div>
+                        </div>
+                    </div>
+
+                    <div id="user-profile" class="subsection">
+                        <h3 class="subsection-title">2.3 Личный кабинет</h3>
+                        <p class="content-text">В личном кабинете отображается личная информация пользователя (логин, email, имя и фамилия). Пользователь может редактировать данные, просматривать историю бронирования и выйти из аккаунта.</p>
+                        <div class="image-box">
+                            <img src="/img/referenceMedia/image4.png" alt="Личный кабинет">
+                            <div class="image-description">Страница личного кабинета</div>
+                        </div>
+
+                        <p class="content-text">На странице редактирования личных данных пользователь может изменить логин, email, имя и фамилию, затем нажать кнопку «Сохранить» для применения изменений или «Закрыть» для отмены.</p>
+                        <div class="image-box">
+                            <img src="/img/referenceMedia/image5.png" alt="Редактирование данных">
+                            <div class="image-description">Страница редактирования личных данных</div>
+                        </div>
+
+                        <p class="content-text">На странице истории бронирования отображается список бронирований с указанием номера, даты и времени бронирования, даты и времени сеанса, названия фильма и стоимости. Пользователь может нажать кнопку «Подробнее» для перехода к информации о заказе или «Отменить» для отмены непрошедшего сеанса.</p>
+                        <div class="image-box">
+                            <img src="/img/referenceMedia/image6.png" alt="История бронирования">
+                            <div class="image-description">Страница истории бронирования</div>
+                        </div>
+                    </div>
+
+                    <div id="user-booking" class="subsection">
+                        <h3 class="subsection-title">2.4 Процесс бронирования</h3>
+                        <p class="content-text">Пользователь может выбрать фильм, сеанс, места в зале и подтвердить бронирование.</p>
+
+                        <p class="content-text">В модальном окне выбора даты пользователь может выбрать дату в календаре и нажать кнопку «Выбрать» для подтверждения.</p>
+                        <div class="image-box">
+                            <img src="/img/referenceMedia/image7.png" alt="Выбор даты">
+                            <div class="image-description">Модальное окно выбора даты</div>
+                        </div>
+
+                        <p class="content-text">На странице выбора сеанса отображается информация о фильме (название, жанр, год выхода, страна, режиссёр, описание) и список доступных сеансов с датой, временем, ценой билета и номером зала. Пользователь может нажать кнопку «Назад» для возврата к предыдущей странице или «Купить билет» для перехода к покупке.</p>
+                        <div class="image-box">
+                            <img src="/img/referenceMedia/image9.png" alt="Выбор сеанса">
+                            <div class="image-description">Страница выбора сеанса</div>
+                        </div>
+
+                        <p class="content-text">На странице выбора мест в кинозале пользователь может выбрать места, нажимая соответствующие номера, затем нажать кнопку «Выбрать» для перехода к подтверждению билета или «Назад» для возврата к предыдущей странице.</p>
+                        <div class="image-box">
+                            <img src="/img/referenceMedia/image10.png" alt="Выбор мест">
+                            <div class="image-description">Страница выбора мест</div>
+                        </div>
+
+                        <p class="content-text">На странице подтверждения брони отображается информация о выбранном фильме, дате, времени, стоимости билета и местах. Пользователь может нажать кнопку «Забронировать» для завершения бронирования или «Назад» для отмены.</p>
+                        <div class="image-box">
+                            <img src="/img/referenceMedia/image11.png" alt="Подтверждение брони">
+                            <div class="image-description">Страница подтверждения брони</div>
+                        </div>
+                    </div>
+
+                    <div id="user-order-info" class="subsection">
+                        <h3 class="subsection-title">2.5 Информация о заказе</h3>
+                        <p class="content-text">На странице просмотра информации о заказе отображаются детали заказа: название фильма, дата, время, выбранные места и общая сумма.</p>
+                        <div class="image-box">
+                            <img src="/img/referenceMedia/image8.png" alt="Просмотр заказа">
+                            <div class="image-description">Страница информации о заказе</div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="admin-mode" class="section">
+                    <h2 class="section-title">3. Режим администратора</h2>
+
+                    <div id="admin-halls" class="subsection">
+                        <h3 class="subsection-title">3.1 Управление залами</h3>
+                        <p class="content-text">На странице просмотра залов отображается список залов. Администратор может добавить и редактировать зал, нажав на кнопку «Добавить зал» и «Редактировать» соответственно.</p>
+                        <div class="image-box">
+                            <img src="/img/referenceMedia/image15.png" alt="Просмотр залов">
+                            <div class="image-description">Страница просмотра залов</div>
+                        </div>
+
+                        <p class="content-text">На странице настройки схемы зала отображается информация о зале (номер, тип, количество рядов и мест) и схема зала. Администратор может добавить или удалить ряд. При нажатии на кнопку с плюсом открывается модальное окно для настройки ценового коэффициента. Администратор может нажать кнопку «Сохранить» для применения изменений.</p>
+                        <div class="image-box">
+                            <img src="/img/referenceMedia/image16.png" alt="Настройка схемы зала">
+                            <div class="image-description">Страница настройки схемы зала</div>
+                        </div>
+
+                        <p class="content-text">На странице редактирования зала администратор может изменить тип зала, количество рядов и мест, затем нажать кнопку «Сохранить» для применения изменений или «Назад» для возврата на предыдущую страницу.</p>
+                        <div class="image-box">
+                            <img src="/img/referenceMedia/image17.png" alt="Редактирование зала">
+                            <div class="image-description">Страница редактирования зала</div>
+                        </div>
+
+                        <p class="content-text">На странице редактирования ряда администратор может изменить коэффициент стоимости ряда и нажать «Сохранить» для применения изменений.</p>
+                        <div class="image-box">
+                            <img src="/img/referenceMedia/image18.png" alt="Редактирование ряда">
+                            <div class="image-description">Страница редактирования ряда</div>
+                        </div>
+                    </div>
+
+                    <div id="admin-movies" class="subsection">
+                        <h3 class="subsection-title">3.2 Управление фильмами</h3>
+                        <p class="content-text">На странице просмотра фильмов отображается список всех фильмов с краткой информацией (жанр, год выхода, страна). Администратор может добавлять, редактировать или удалять фильмы. Также он может нажать кнопки «Подробнее» для просмотра сеанса или «Удалить».</p>
+                        <div class="image-box">
+                            <img src="/img/referenceMedia/image19.png" alt="Просмотр фильмов">
+                            <div class="image-description">Страница просмотра фильмов</div>
+                        </div>
+
+                        <p class="content-text">На странице добавления фильма администратор может ввести название, выбрать жанр, год выхода, страну, режиссёра, указать длительность, загрузить постер и добавить описание, затем нажать кнопку «Добавить».</p>
+                        <div class="image-box">
+                            <img src="/img/referenceMedia/image20.png" alt="Добавление фильма">
+                            <div class="image-description">Страница добавления фильма</div>
+                        </div>
+
+                        <p class="content-text">На странице редактирования фильма администратор может изменить информацию о фильме (название, жанр, год, страна, длительность, постер, описание), добавить несколько режиссеров, нажав на кнопку «Добавить режиссера», затем нажать кнопку «Сохранить» для применения изменений.</p>
+                        <div class="image-box">
+                            <img src="/img/referenceMedia/image21.png" alt="Редактирование фильма (часть 1)">
+                            <div class="image-description">Страница редактирования фильма (часть 1)</div>
+                        </div>
+                        <div class="image-box">
+                            <img src="/img/referenceMedia/image22.png" alt="Редактирование фильма (часть 2)">
+                            <div class="image-description">Страница редактирования фильма (часть 2)</div>
+                        </div>
+                    </div>
+
+                    <div id="admin-sessions" class="subsection">
+                        <h3 class="subsection-title">3.3 Управление сеансами</h3>
+                        <p class="content-text">На странице добавления сеансов отображается информация о фильме, а также список сеансов, которые администратор может добавлять, редактировать и удалять.</p>
+                        <div class="image-box">
+                            <img src="/img/referenceMedia/image23.png" alt="Добавление сеансов">
+                            <div class="image-description">Страница добавления сеансов</div>
+                        </div>
+
+                        <p class="content-text">На странице редактирования сеансов отображается название фильма, а также детали сеанса, которые администратор может изменить, нажав на кнопку «Обновить».</p>
+                        <div class="image-box">
+                            <img src="/img/referenceMedia/image24.png" alt="Редактирование сеансов">
+                            <div class="image-description">Страница редактирования сеансов</div>
+                        </div>
+                    </div>
+
+                    <div id="admin-directors" class="subsection">
+                        <h3 class="subsection-title">3.4 Справочник режиссеров</h3>
+                        <p class="content-text">На странице справочника режиссеров отображается список режиссеров, которые администратор может добавлять, редактировать и удалять.</p>
+                        <div class="image-box">
+                            <img src="/img/referenceMedia/image25.png" alt="Справочник режиссеров">
+                            <div class="image-description">Справочник режиссеров</div>
+                        </div>
+
+                        <p class="content-text">На странице редактирования режиссера администратор может изменить ФИО режиссера, нажав на кнопку «Обновить».</p>
+                        <div class="image-box">
+                            <img src="/img/referenceMedia/image26.png" alt="Редактирование режиссера">
+                            <div class="image-description">Страница редактирования режиссера</div>
+                        </div>
+                    </div>
+
+                    <div id="admin-countries" class="subsection">
+                        <h3 class="subsection-title">3.5 Справочник стран</h3>
+                        <p class="content-text">На странице справочника стран отображается список стран, которые администратор может добавлять, редактировать и удалять.</p>
+                        <div class="image-box">
+                            <img src="/img/referenceMedia/image27.png" alt="Справочник стран">
+                            <div class="image-description">Справочник стран</div>
+                        </div>
+
+                        <p class="content-text">На странице редактирования страны администратор может изменить название страны, нажав на кнопку «Обновить».</p>
+                        <div class="image-box">
+                            <img src="/img/referenceMedia/image28.png" alt="Редактирование страны">
+                            <div class="image-description">Страница редактирования страны</div>
+                        </div>
+                    </div>
+
+                    <div id="admin-genres" class="subsection">
+                        <h3 class="subsection-title">3.6 Справочник жанров</h3>
+                        <p class="content-text">На странице справочника жанров отображается список жанров, которые администратор может добавлять, редактировать и удалять.</p>
+                        <div class="image-box">
+                            <img src="/img/referenceMedia/image29.png" alt="Справочник жанров">
+                            <div class="image-description">Справочник жанров</div>
+                        </div>
+
+                        <p class="content-text">На странице редактирования жанра администратор может изменить жанр, нажав на кнопку «Обновить».</p>
+                        <div class="image-box">
+                            <img src="/img/referenceMedia/image30.png" alt="Редактирование жанра">
+                            <div class="image-description">Страница редактирования жанра</div>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
     </div>
-  </div>
 </div>
 </body>
 </html>
