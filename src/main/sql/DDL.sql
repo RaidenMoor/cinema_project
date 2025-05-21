@@ -44,10 +44,10 @@ create table films
     country       smallint     not null,
     description      varchar(255) not null,
     genre          smallint     not null,
-    duration int;
+    duration int,
     poster_file_name varchar(255),
     release_year     smallint     not null,
-    title            varchar(255) not null,
+    title            varchar(255) not null
 
 );
 
@@ -74,6 +74,21 @@ create table films_film_creators
         constraint fk_film_creators_films
             references film_creators,
     primary key (film_id, film_creator_id)
+);
+
+create table halls (
+ id           bigint       not null
+            primary key,
+        created_by   varchar(255) not null,
+        created_when timestamp(6) not null,
+        deleted_by   varchar(255),
+        deleted_when timestamp(6),
+        is_deleted   boolean,
+        updated_by   varchar(255),
+        updated_when timestamp(6),
+        count_row smallint not null,
+        count_place smallint not null,
+        hall_type varchar(20) not null
 );
 
 create table film_sessions
@@ -109,7 +124,7 @@ create table seats
     is_deleted   boolean,
     updated_by   varchar(255),
     updated_when timestamp(6),
-    price        double precision default=1,
+    price        int default 1,
     place        smallint     not null,
     row          smallint     not null,
     hall_id      bigint       not null,
@@ -195,20 +210,7 @@ create table genres (
         genre_name    varchar(255) not null
 );
 
-create table halls (
- id           bigint       not null
-            primary key,
-        created_by   varchar(255) not null,
-        created_when timestamp(6) not null,
-        deleted_by   varchar(255),
-        deleted_when timestamp(6),
-        is_deleted   boolean,
-        updated_by   varchar(255),
-        updated_when timestamp(6),
-        count_row smallint not null,
-        count_place smallint not null,
-        hall_type varchar(20) not null
-);
+
 CREATE UNIQUE INDEX idx_unique_film ON films(title, release_year);
 CREATE UNIQUE INDEX idx_genres ON genres(genre_name);
 CREATE UNIQUE INDEX idx_countries ON countries(country_name);

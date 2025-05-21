@@ -50,7 +50,6 @@ public class WebSecurityConfig {
 
                 .requestMatchers(FILMS_WHITE_LIST.toArray(String[]::new)).permitAll()
                 .requestMatchers(ORDERS_WHITE_LIST.toArray(String[]::new)).authenticated()
-                .requestMatchers(REVIEWS_WHITE_LIST.toArray(String[]::new)).hasRole(USER)
                 .requestMatchers(SEATS_WHITE_LIST.toArray(String[]::new)).permitAll()
                 .requestMatchers(USERS_WHITE_LIST.toArray(String[]::new)).authenticated()
 
@@ -58,9 +57,8 @@ public class WebSecurityConfig {
                 .requestMatchers(FILM_CREATORS_PERMISSION_LIST.toArray(String[]::new)).hasAnyRole(adminRole, MANAGER)
                 .requestMatchers(ORDERS_PERMISSION_LIST.toArray(String[]::new)).hasAnyRole(adminRole, MANAGER)
                 .requestMatchers(FILM_SESSIONS_PERMISSION_LIST.toArray(String[]::new)).hasAnyRole(adminRole, MANAGER)
-                .requestMatchers(REVIEWS_PERMISSION_LIST.toArray(String[]::new)).hasAnyRole(adminRole, MANAGER)
                 .requestMatchers(SEATS_PERMISSION_LIST.toArray(String[]::new)).hasAnyRole(adminRole, MANAGER)
-                .requestMatchers(USERS_PERMISSION_LIST.toArray(String[]::new)).hasAnyRole(adminRole)
+
         )
         .formLogin((form) -> form
             .loginPage("/login")

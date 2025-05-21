@@ -12,8 +12,6 @@ public interface SecurityConstants {
       "/",
       "/login",
       "/users/registration",
-      "/users/remember-password",
-      "/users/change-password",
       "/error",
       "/about",
       "/about/authors",
@@ -49,8 +47,7 @@ public interface SecurityConstants {
       "/filmCreators/update",
       "/filmCreators/update/{id}",
       "/filmCreators/delete/{id}",
-      "/filmCreators/restore/{id}",
-      "/filmCreators/search"
+      "/filmCreators/restore/{id}"
   );
 
   List<String> FILM_SESSIONS_PERMISSION_LIST = List.of(
@@ -77,16 +74,6 @@ public interface SecurityConstants {
       "/orders/restore/{id}"
   );
 
-
-  List<String> REVIEWS_WHITE_LIST = List.of(
-      "/reviews/add",
-      "/reviews/add/{filmId}"
-  );
-
-  List<String> REVIEWS_PERMISSION_LIST = List.of(
-      "/reviews/delete/{id}",
-      "/reviews/restore/{id}"
-  );
 
 
   List<String> SEATS_WHITE_LIST = List.of(
@@ -119,10 +106,5 @@ public interface SecurityConstants {
       "/users/profile/update/{id}"
   );
 
-  List<String> USERS_PERMISSION_LIST = List.of(
-      "/users",
-      "/users/add-manager",
-      "/users/delete/{id}",
-      "/users/restore/{id}"
-  );
+
 }

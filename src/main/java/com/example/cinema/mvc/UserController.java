@@ -74,63 +74,6 @@ public class UserController {
     return "redirect:/login";
   }
 
-  @GetMapping("/add-manager")
-  public String addManager(@ModelAttribute("userForm") UserDTO userDTO) {
-    return "users/addManager";
-  }
-
-  @PostMapping("/add-manager")
-  public String addManager(@ModelAttribute("userForm") UserDTO userDTO, BindingResult bindingResult) {
-    if(adminUserName.equals(userDTO.getLogin()) || userService.getByLogin(userDTO.getLogin()) != null) {
-      bindingResult.rejectValue("login", "error.login", "Такой логин уже существует");
-      return "users/addManager";
-    }
-    if(userService.getByEmail(userDTO.getEmail()) != null) {
-      bindingResult.rejectValue("email", "error.email", "Такая почта уже существует");
-      return "users/addManager";
-    }
-    userService.createManager(userDTO);
-    return "redirect:/users";
-  }
-
-  @GetMapping("remember-password")
-  public String rememberPassword() {
-    return "users/rememberPassword";
-  }
-
-  @PostMapping("remember-password")
-  public String rememberPassword(@ModelAttribute("changePasswordForm") UserDTO userDTO) {
-    userService.sendChangePasswordEmail(userDTO.getEmail());
-    return "redirect:/login";
-  }
-
-  @GetMapping("/change-password")
-  public String changePassword(@PathParam(value = "uuid") String uuid, Model model) {
-    model.addAttribute("uuid", uuid);
-    return "users/changePassword";
-  }
-
-  @PostMapping("change-password")
-  public String changePassword(
-          @PathParam(value = "uuid") String uuid,
-          @ModelAttribute("changePasswordForm") UserDTO userDTO
-  ) {
-    userService.changePassword(uuid, userDTO.getPassword());
-    return "redirect:/login";
-  }
-
-  @GetMapping("/delete/{id}")
-  public String softDelete(@PathVariable Long id) {
-    userService.softDelete(id);
-    return "redirect:/users";
-  }
-
-  @GetMapping("/restore/{id}")
-  public String restore(@PathVariable Long id) {
-    userService.restore(id);
-    return "redirect:/users";
-  }
-
 
 
   @Autowired

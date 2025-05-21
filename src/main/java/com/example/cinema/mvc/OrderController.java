@@ -1,5 +1,7 @@
 package com.example.cinema.mvc;
 
+import com.example.cinema.dto.UserDTO;
+import com.example.cinema.service.*;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -10,10 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import com.example.cinema.dto.DatePeriodDTO;
 import com.example.cinema.dto.FilmSessionDTO;
 import com.example.cinema.dto.OrderDTO;
-import com.example.cinema.service.FilmService;
-import com.example.cinema.service.FilmSessionService;
-import com.example.cinema.service.OrderService;
-import com.example.cinema.service.SeatService;
 
 import java.time.LocalDateTime;
 
@@ -25,6 +23,8 @@ public class OrderController {
     SeatService seatService;
     FilmSessionService filmSessionService;
     FilmService filmService;
+    EmailService emailService;
+    UserService userService;
 
 
 
@@ -79,8 +79,31 @@ public class OrderController {
     }
 
     @PostMapping("/add")
-    public String addOrder(@ModelAttribute("orderForm") OrderDTO orderDTO) {
+    public String addOrder(@ModelAttribute("orderForm") OrderDTO orderDTO)
+                           {
         orderService.create(orderDTO);
+
+        FilmSessionDTO filmSessionDTO = filmSessionService.getById(orderDTO.getFilmSessionId());
+        /*UserDTO userDTO = userService.getById(orderDTO.getUserId());
+        String userEmail = userDTO.getEmail();
+        System.out.println(userEmail);
+        String subject = "Электронный билет";
+
+        String text = String.format(
+                                       "Уважаемый %s,\n\n" +
+                                               "Ваш заказ №%d успешно оформлен.\n" +
+                                               "Фильм: %s\n" +
+                                               "Дата и время: %s\n" +
+                                               "Зал: %d\n" +
+                                               "Спасибо за покупку!",
+                                       userDTO.getFirstName(),
+                                       orderDTO.getId(),
+                                       filmService.getById(filmSessionDTO.getFilmId()).getTitle(),
+                                       filmSessionDTO.getStartDate(),
+                                       filmSessionDTO.getHallId()
+                               );
+
+                               emailService.sendOrderConfirmation(userEmail, subject, text);*/
         return "redirect:/orders/user/" + orderDTO.getUserId();
     }
 
@@ -135,4 +158,10 @@ public class OrderController {
     public void setFilmService(FilmService filmService) {
         this.filmService = filmService;
     }
+
+    @Autowired
+    public void setEmailService(EmailService emailService) {this.emailService = emailService; }
+    @Autowired
+    public void setUserService(UserService userService) {this.userService = userService; }
+
 }
